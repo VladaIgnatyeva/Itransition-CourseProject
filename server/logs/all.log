@@ -927,3 +927,13 @@
 {"message":"Connected to DB!","level":"info"}
 {"message":"User login with id: 5e736dc8f4680449d4768618","level":"info"}
 {"message":"User login with id: 5e73839b67be104c781404b5","level":"info"}
+{"message":"Server is up and running on port 8080","level":"info"}
+{"message":"Connected to DB!","level":"info"}
+{"message":"User login with id: 5e736dc8f4680449d4768618","level":"info"}
+{"message":"User login with id: 5e73839b67be104c781404b5","level":"info"}
+{"message":"User login with id: 5e73839b67be104c781404b5","level":"info"}
+{"message":"User login with id: 5e736dc8f4680449d4768618","level":"info"}
+{"message":"GET 401 No authorization token was found","level":"error"}
+{"message":"User login with id: 5e736dc8f4680449d4768618","level":"info"}
+{"message":"GET 401 No authorization token was found","level":"error"}
+{"message":"User login with id: 5e736dc8f4680449d4768618","level":"info"}

@@ -142,7 +142,8 @@ export default class User extends Component {
 
 
     render() {
-        console.log("avatar render ", localStorage.getItem('avatar'))
+        console.log("avatar render ", localStorage.getItem('avatar'));
+        const settingLink = `/user/${localStorage.getItem('id')}/settings/`
         return (
             <>
                 <div className="divSetting">
@@ -155,11 +156,11 @@ export default class User extends Component {
                                 <h1 style={{ marginLeft: 30 + 'px', marginRight: 30 + 'px' }}>{this.state.username}</h1>
                             </div>
                             <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 divSettingTool" >
-                                <LinkContainer to="/user/settings">
+                                <LinkContainer to={settingLink}>
                                     <Button variant="dark" type="button" size="sm" block >
                                         <img src={pen_img} alt="icon_pen" height="15" style={{ marginRight: 5 + 'px' }} />
                                         Complete Your Profile
-                                        </Button>
+                                    </Button>
                                 </LinkContainer>
                             </div>
                         </div>
@@ -168,11 +169,11 @@ export default class User extends Component {
                     <h4 style={{ marginTop: 100 + 'px' }}>Collections</h4>
                     <Container>
                         <div className="row">
-                            <CardDeck>
+                            
                                 <div className="card-deck col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 d-flex flex-column align-items-center justify-content-center" style={{ marginTop: 3 + '%' }}>
-                                    <Card >
+                                    <Card > 
                                         <Card.Body className="d-flex flex-column align-items-center justify-content-center ">
-                                            <Card.Title>Add new collection</Card.Title>
+                                            <h3>Add new collection</h3>
                                             <Container className="d-flex justify-content-center ">
                                                 <Button variant="link" onClick={this.handleShowNewCol.bind(this)} >
                                                     <Image src={plus1_img} height="120" />
@@ -200,7 +201,7 @@ export default class User extends Component {
                                         </div>
                                     })
                                 }
-                            </CardDeck>
+                            
                         </div>
                     </Container>
 

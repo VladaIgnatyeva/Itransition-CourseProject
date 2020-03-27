@@ -40,7 +40,7 @@ class Header extends Component {
 
     render() {
         //console.log(" this.props.user store", this.props.user)
-
+        
         if (this.props.user.isLoggedInStatus && this.props.user.isLoggedInStatus != "false") {
 
             return (
@@ -116,7 +116,7 @@ class Header extends Component {
                             <LinkContainer to="/SignIn">
                                 <Button variant="outline-info" style={{ marginLeft: 30 + 'px' }}>
                                     Sign In
-                                    </Button>
+                                </Button>
                             </LinkContainer>
                         </Form>
                     </Navbar.Collapse>

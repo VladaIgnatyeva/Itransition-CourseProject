@@ -66,7 +66,7 @@ const App = (props) => {
       />
       <PrivateRoute
         exact
-        path="/user/settings"
+        path="/user/:idUser/settings"
         component={UserSettings}
       />
       <Route

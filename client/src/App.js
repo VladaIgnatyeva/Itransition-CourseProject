@@ -9,6 +9,7 @@ import UserSettings from './pages/userSettings';
 import { Provider } from 'react-redux'
 import { BrowserRouter as Router, Route, Redirect  } from 'react-router-dom'
 import WrappHeader from './components/WrappHeader';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={(props) => (
@@ -70,6 +71,7 @@ const App = (props) =>{
           path="/user"
           component={User}
         />
+        
       </div>
     )
 

@@ -38,7 +38,7 @@ class Header extends Component {
 
 
     render() {
-        console.log(" this.props.user store", this.props.user)
+        //console.log(" this.props.user store", this.props.user)
 
         if (this.props.user.isLoggedInStatus && this.props.user.isLoggedInStatus != "false") {
 

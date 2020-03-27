@@ -4,14 +4,13 @@ import Header from './header';
 
 function HeaderContainer(props) {
     //console.log("HeaderContainer ", props.user);
-    console.log("local storage ", localStorage.getItem('username'));
     return(
         <Header user={props.user} />
     )
 }
 
 const mapStateToProps = function (state) {
-    console.log("mapStateToProps state  ", state);
+    //console.log("mapStateToProps state  ", state);
 
     return {
         user: state.user

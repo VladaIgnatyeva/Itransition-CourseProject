@@ -10,7 +10,9 @@
   },
   "watch": {
     "serve": {
-      "patterns": ["libs"],
+      "patterns": [
+        "libs"
+      ],
       "extensions": "js",
       "runOnChangeOnly": false
     }

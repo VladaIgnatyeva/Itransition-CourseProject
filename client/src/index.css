@@ -52,12 +52,15 @@ code {
 .divSetting{
   background:rgba(247, 247, 247, 0.5);
   border: 1px double rgba(177, 176, 176, 0.5);
-  margin: 50px;
-  margin-left: 10%;
-  margin-right: 10%;
+  margin: 5%;
   padding: 5%;
-  padding-left: 10%;
-  padding-right: 10%;
+}
+
+.divSettingTool{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
 }
 
 .titleSetting{
@@ -109,3 +112,73 @@ input[type=search]:focus {
   border-color: #333;
   border: solid 1px #fff;
 }
+
+
+
+#drop-area {
+  border: 2px dashed #ccc;
+  border-radius: 20px;
+  width: 480px;
+  font-family: sans-serif;
+  margin: 30px auto;
+  padding: 10px;
+}
+#drop-area.highlight {
+  border-color: purple;
+}
+p {
+  margin-top: 0;
+}
+.my-form {
+  margin-bottom: 10px;
+}
+#gallery {
+  margin-top: 10px;
+}
+#gallery img {
+  width: 150px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+.button {
+  display: inline-block;
+  padding: 10px;
+  background: #ccc;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.button:hover {
+  background: #ddd;
+}
+#fileElem {
+  display: none;
+}
+
+#textErrorModal{
+  color: red;
+  font-size: 15pt;
+  align-content: center;
+  text-decoration: underline;
+}
+
+.cardTool{
+  position: absolute;
+  opacity: 0;
+  transform: scale(0.75);
+  display: flex;
+  justify-content: flex-end;
+ 
+}
+
+.cardImg{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cardImg:hover .cardTool{
+  opacity: 1;
+}
+
+

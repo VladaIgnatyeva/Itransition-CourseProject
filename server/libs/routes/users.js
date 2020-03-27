@@ -13,7 +13,8 @@ router.get('/', function (req, res) {
         _id: 1,
         username: 1,
         email: 1,
-        role: 1
+        role: 1,
+        avatar: ''
     });
 
     result.then(data => res.json(data))
@@ -43,7 +44,7 @@ router.put('/user/password', function (req, res) {
 });
 
 router.put('/user', function (req, res) {
-    User.updateOne({ _id: req.body._id }, { $set: { username: req.body.username, email: req.body.email } })
+    User.updateOne({ _id: req.body._id }, { $set: { username: req.body.username, email: req.body.email, avatar : req.body.avatar } })
         .then(data => res.json(data))
         .catch(err => res.status(400).send(err));
 });

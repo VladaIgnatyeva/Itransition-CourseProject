@@ -46,9 +46,11 @@ export default class SignIn extends Component {
                     localStorage.setItem("id", res.data.id);
                     localStorage.setItem('role', res.data.role);
                     localStorage.setItem('isLoggedIn', true);
+                    localStorage.setItem('avatar', res.data.avatar);
+
                     
                     const store = getStore();
-                    store.dispatch(loggedIn({username: res.data.username, role: res.data.role, id:res.data.id, isLoggedInStatus: true}));
+                    store.dispatch(loggedIn({username: res.data.username, role: res.data.role, id:res.data.id, isLoggedInStatus: true, avatar:res.data.avatar}));
                     console.log("Store redux login:  ", store.getState());
 
                     this.props.history.push("/user");

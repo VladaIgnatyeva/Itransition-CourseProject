@@ -19,13 +19,15 @@ router.get('/', function (req, res) {
 });
 
 router.get('/:id', function (req, res) {
-    console.log("id ", req.params)
+    //console.log("id ", req.params)
     Collection.findOne({ _id: req.params.id }, {
         title: 1,
         description: 1,
         topic: 1,
         cover: '',
-        fieldsImage: 1
+        fieldsImage: 1,
+        author : 1,
+        authorId : 1
     })
         .then(data => {console.log(data); res.json(data)})
         .catch(err => res.status(400).send(err));

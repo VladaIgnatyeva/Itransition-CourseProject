@@ -10,7 +10,8 @@ export default function userReducer(state = initialState.user, action) {
                 isLoggedInStatus : true,
                 username: action.payload.username,
                 role: action.payload.role,
-                id: action.payload.id
+                id: action.payload.id,
+                avatar: action.payload.avatar
             }
         }
 

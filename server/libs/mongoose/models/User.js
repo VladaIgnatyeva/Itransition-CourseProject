@@ -40,6 +40,11 @@ const User = new Schema({
     facebookId: {
         type: String,
         required: false
+    },
+    avatar : {
+        type: String,
+        required: false,
+        default: 'https://www.gravatar.com/avatar/f5d2e745db058e22dbd577f4613ed9a4?s=60&d=mm'
     }
 })
 
@@ -86,7 +91,8 @@ User.methods.toAuthJSON = function() {
       id: this.id,
       username: this.username,
       role: this.role,
-      token: this.generateJWT()
+      token: this.generateJWT(),
+      avatar : this.avatar
     };
   };
 

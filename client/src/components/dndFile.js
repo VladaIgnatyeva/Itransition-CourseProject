@@ -12,7 +12,7 @@ import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
 
-const createCloudinary = (cloudName, unsignedUploadPreset, setCover) => ({
+export const createCloudinary = (cloudName, unsignedUploadPreset, setCover) => ({
     process: (fieldName, file, metadata, load, error, progress, abort) => {
 
         // `fieldName` and `meta` are not used for now
@@ -68,7 +68,6 @@ class DndFile extends Component {
                 src: "#",
                 alt: "Placeholder Text",
             }
-
         };
     }
 

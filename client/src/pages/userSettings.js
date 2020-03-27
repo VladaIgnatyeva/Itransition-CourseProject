@@ -3,6 +3,10 @@ import user_img from '../assets/userDefault.png';
 import { Button, Form, Navbar, Container, Nav } from 'react-bootstrap';
 import Wrapper from '../utils/wrapperAxios';
 import { LinkContainer } from 'react-router-bootstrap'
+import AvatarChoose from '../components/avatarChoose'
+import createCloudinary from '../components/dndFile'
+import axios from 'axios';
+
 
 
 export default class UserSettings extends Component {
@@ -13,9 +17,10 @@ export default class UserSettings extends Component {
             username: '',
             email: '',
             password: '',
-            passwordConfirm: ''
+            passwordConfirm: '',
+            avatar: '',
+            file: []
         }
-
         this.handleChange = this.handleChange.bind(this);
     }
 
@@ -29,29 +34,18 @@ export default class UserSettings extends Component {
         const wrapp = new Wrapper();
         wrapp.get('api/users/user/' + localStorage.getItem("id"))
             .then(res => {
-                //console.log("response  ", res);
                 this.setState({
                     username: res.data.username,
-                    email: res.data.email
+                    email: res.data.email,
+                    avatar: res.data.avatar
                 });
-
+                //console.log("get user avatar", this.state.avatar)
 
             })
             .catch(err => {
-                //if (err.response.status === 401) {
-                //this.props.history.push("/SignIn");
-                //}
                 console.log(err);
             })
     }
-
-    getInputFile() {
-        const input = document.querySelector('input');
-        const path = input.value;
-        const avatar = document.getElementById('avatar');
-        avatar.src = path;
-    }
-
 
     deleteAccount() {
         const wrapp = new Wrapper();
@@ -71,55 +65,89 @@ export default class UserSettings extends Component {
             });
     }
 
+    setAvatar(url) {
+        console.log("url ", url)
+        this.setState({ avatar: url });
+    }
+
+    handleScanner = () => {
+        const formData = new FormData();
+        formData.append("file", this.state.file);
+        formData.append("tags", 'text_detection');
+        formData.append("upload_preset", 'yczph1h5');
+        formData.append("api_key", "246125568439137");
+        formData.append("timestamp", (Date.now() / 1000) | 0);
+
+        return axios.post(`https://api.cloudinary.com/v1_1/dvfmqld3v/image/upload`, formData, { headers: { "X-Requested-With": "XMLHttpRequest" } })
+            .then(response => {
+                //console.log("avatar new ", response.data.secure_url)
+                this.setAvatar(response.data.secure_url);
+            })
+            .catch(err => console.log("error", err))
+    }
+
     saveSettings() {
 
         let someElement = document.getElementById('textError');
-        const user = {
-            _id: localStorage.getItem('id'),
-            username: this.state.username,
-            email: this.state.email,
-        };
 
-        if (this.state.email.length > 0 && this.state.username.length > 0) {
-            if (this.state.password === this.state.passwordConfirm) {
-                const wrapp = new Wrapper();
-                if (this.state.password.length != 0) {
-                    const userPassword = {
-                        _id: localStorage.getItem('id'),
-                        password: this.state.password
-                    };
+        this.handleScanner().then(() => {
+            console.log("state avatar", this.state.avatar);
 
-                    wrapp.put('api/users/user/password', userPassword)
+            const user = {
+                _id: localStorage.getItem('id'),
+                username: this.state.username,
+                email: this.state.email,
+                avatar: this.state.avatar
+            };
+
+            if (this.state.email.length > 0 && this.state.username.length > 0) {
+                if (this.state.password === this.state.passwordConfirm) {
+                    const wrapp = new Wrapper();
+                    if (this.state.password.length != 0) {
+                        const userPassword = {
+                            _id: localStorage.getItem('id'),
+                            password: this.state.password
+                        };
+
+                        wrapp.put('api/users/user/password', userPassword)
+                            .then(res => {
+
+                            })
+                            .catch(err => {
+                                someElement.innerHTML = err;
+                            })
+                    }
+
+                    wrapp.put('api/users/user', user)
                         .then(res => {
+                            localStorage.setItem("username", this.state.username);
+                            localStorage.setItem('avatar', this.state.avatar);
 
+                            this.props.history.push("/user");
                         })
                         .catch(err => {
                             someElement.innerHTML = err;
                         })
+                } else {
+                    someElement.innerHTML = "Passwords do not match.";
                 }
-
-                wrapp.put('api/users/user', user)
-                    .then(res => {
-                        localStorage.setItem("username", this.state.username);
-
-                        this.props.history.push("/user");
-                    })
-                    .catch(err => {
-                        someElement.innerHTML = err;
-                    })
             } else {
-                someElement.innerHTML = "Passwords do not match.";
+                someElement.innerHTML = "Fill in all the fields.";
             }
-        } else {
-            someElement.innerHTML = "Fill in all the fields.";
-        }
+        });
+
     }
 
+    updateAvatar(file) {
+        this.setState({ file });
+    }
+
+
     render() {
+        console.log("prev ", this.state.avatar);
         return (
             <>
                 <div className="divSetting d-flex justify-content-start flex-column">
-
                     <div className="titleSetting" >
                         <h2> Edit Your Profile </h2>
                     </div>
@@ -127,19 +155,7 @@ export default class UserSettings extends Component {
                     <Form.Group name="avatar_form" >
                         <h5>Avatar</h5>
                         <div className="d-flex align-items-center flex-row">
-                            <img id="avatar" src={user_img} alt="userDefault" height="100" vspace="10" />
-
-                            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
-
-                            <div className="example-2" style={{ marginLeft: 20 + 'px' }}>
-                                <div className="form-group">
-                                    <input type="file" name="file" id="file" className="input-file" />
-                                    <label htmlFor="file" className="btn btn-tertiary js-labelFile">
-                                        <i className="icon fa fa-check"></i>
-                                        <span className="js-fileName">Choose file</span>
-                                    </label>
-                                </div>
-                            </div>
+                            <AvatarChoose src={this.state.avatar} updateAvatar={this.updateAvatar.bind(this)} />
                         </div>
                     </Form.Group>
                     <Form.Text id="textError" name="error" onChange={this.handleChange}></Form.Text>
@@ -177,17 +193,15 @@ export default class UserSettings extends Component {
 
                         <Form.Group>
                             <div>
-                                
-                                    <Button variant="dark" type="button" id="save" size="lg" block onClick={this.saveSettings.bind(this)}>
-                                        Save
-                                    </Button>
-                                
+                                <Button variant="dark" type="button" id="save" size="lg" block onClick={this.saveSettings.bind(this)}>
+                                    Save
+                                </Button>
+
                                 <LinkContainer to="/user">
                                     <Button variant="light" type="button" id="cancel" size="lg" block>
                                         Cancel
                                     </Button>
                                 </LinkContainer>
-
                             </div>
 
                         </Form.Group>

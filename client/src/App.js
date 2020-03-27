@@ -5,9 +5,10 @@ import SignUp from './pages/signUp';
 import SignIn from './pages/signIn';
 import UsersPage from './pages/users';
 import User from './pages/user';
+import Collection from './pages/collection';
 import UserSettings from './pages/userSettings';
 import { Provider } from 'react-redux'
-import { BrowserRouter as Router, Route, Redirect  } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 import WrappHeader from './components/WrappHeader';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -27,53 +28,61 @@ const PrivateRouteAdmin = ({ component: Component, ...rest }) => (
   )} />
 )
 
-const App = (props) =>{
+const App = (props) => {
 
-    const store = props.store;
-    return (
-      <div>
-        <Provider store={store}>
-          <WrappHeader />
-        </Provider>
-        
+  const store = props.store;
+  return (
+    <div>
+      <Provider store={store}>
+        <WrappHeader />
+      </Provider>
 
-        <Route
-          exact
-          path="/"
-          component={Home}
-        />
-        <Route
-          exact
-          path="/home"
-          component={Home}
-        />
-        <Route
-          path="/signUp"
-          component={SignUp}
-        />
-        <Route
-          exact
-          path="/signIn"
-          component={SignIn}
-        />
-        <PrivateRouteAdmin
-          path="/users"
-          component={UsersPage}
 
-        />
-        <PrivateRoute
-          path="/user/settings"
-          component={UserSettings}
+      <Route
+        exact
+        path="/"
+        component={Home}
+      />
+      <Route
+        exact
+        path="/home"
+        component={Home}
+      />
+      <Route
+        exact
+        path="/signUp"
+        component={SignUp}
+      />
+      <Route
+        exact
+        path="/signIn"
+        component={SignIn}
+      />
+      <PrivateRouteAdmin
+        exact
+        path="/users"
+        component={UsersPage}
 
-        />
-        <Route
-          exact
-          path="/user"
-          component={User}
-        />
-        
-      </div>
-    )
+      />
+      <PrivateRoute
+        exact
+        path="/user/settings"
+        component={UserSettings}
+      />
+      <Route
+        exact
+        path="/user/:idUser?"
+        component={User}
+      />
+
+      <Route
+        exact
+        path="/collection/:idCollection"
+        component={Collection}
+      />
+
+    </div>
+  )
 
 }
 

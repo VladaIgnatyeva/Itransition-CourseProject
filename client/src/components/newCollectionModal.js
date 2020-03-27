@@ -48,7 +48,7 @@ const NewCollectionModal = (props) => {
                 wrapp.post('api/collections/collection', newCollection)
                     .then(res => {
                         //console.log("response ", res.data);
-                        this.handleShow();
+                        handleShow();
                     })
                     .catch(err => {
                         someElement.innerHTML = err;

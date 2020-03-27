@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, Card, Container } from 'react-bootstrap';
 import img_default from '../assets/card_default.jpeg'
 import ReactMarkdown from 'react-markdown';
+import { LinkContainer } from 'react-router-bootstrap';
 
 
 class CardCollection extends Component {
@@ -22,6 +23,7 @@ class CardCollection extends Component {
     }
 
     render() {
+        const linkCollection = `/collection/${this.state.item._id}`
         return (
             <Card >
                 <div className="cardImg ">
@@ -44,7 +46,10 @@ class CardCollection extends Component {
                             <div>
                                 <ReactMarkdown source={this.state.item.description} escapeHtml={false} />{' '}
                             </div>
-                            <a href="#" className="btn btn-secondary stretched-link">Go </a>
+                            <LinkContainer to={linkCollection}>
+                                <a className="btn btn-secondary stretched-link">Go </a>
+                            </LinkContainer>
+                            
                         </Card.Body>
                     </div>
                 </div>

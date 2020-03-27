@@ -23,6 +23,7 @@ export default class User extends Component {
             localStorage.setItem("token", params.token);
             localStorage.setItem("username", params.username);
             localStorage.setItem("id", params.id);
+            localStorage.setItem("avatar", params.avatar);
 
             const store = getStore();
             store.dispatch(loggedIn({ username: params.username, role: params.role, isLoggedInStatus: true }));
@@ -35,7 +36,8 @@ export default class User extends Component {
             update: false,
             show: false,
             headerModal: '',
-            typeModal: ''
+            typeModal: '',
+            avatar: localStorage.getItem("avatar")
         }
     }
 
@@ -44,11 +46,11 @@ export default class User extends Component {
             title: '',
             description: '',
             topic: 'Books',
-            checkbox: {'one': '', 'two': '', 'three' : ''},
-            number: {'one': '', 'two': '', 'three' : ''},
-            string: {'one': '', 'two': '', 'three' : ''},
-            text: {'one': '', 'two': '', 'three' : ''},
-            date: {'one': '', 'two': '', 'three' : ''},
+            checkbox: { 'one': '', 'two': '', 'three': '' },
+            number: { 'one': '', 'two': '', 'three': '' },
+            string: { 'one': '', 'two': '', 'three': '' },
+            text: { 'one': '', 'two': '', 'three': '' },
+            date: { 'one': '', 'two': '', 'three': '' },
             cover: 'https://res.cloudinary.com/dvfmqld3v/image/upload/w_300,h_200/logoDefault_chafgb',
             id: ''
         };
@@ -59,15 +61,15 @@ export default class User extends Component {
         this.setState({ update: !this.state.update })
     }
 
-    handleShow() {       
+    handleShow() {
         //console.log('handle show')
         this.setState({
             show: !this.state.show
         });
         this.changeStateUpdate();
     }
-    
-    handleShowNewCol() {  
+
+    handleShowNewCol() {
         this.setState({
             show: !this.state.show,
             headerModal: 'New Collection',
@@ -99,24 +101,22 @@ export default class User extends Component {
                 collection.topic = res.data.topic;
                 collection.cover = res.data.cover;
                 collection.checkbox = res.data.fieldsImage.checkbox || {};
-                collection.number = res.data.fieldsImage.number || {'one': '', 'two': '', 'three' : ''};
-                collection.string = res.data.fieldsImage.string || {'one': '', 'two': '', 'three' : ''};
-                collection.text = res.data.fieldsImage.text || {'one': '', 'two': '', 'three' : ''};
-                collection.date = res.data.fieldsImage.date || {'one': '', 'two': '', 'three' : ''};
+                collection.number = res.data.fieldsImage.number || { 'one': '', 'two': '', 'three': '' };
+                collection.string = res.data.fieldsImage.string || { 'one': '', 'two': '', 'three': '' };
+                collection.text = res.data.fieldsImage.text || { 'one': '', 'two': '', 'three': '' };
+                collection.date = res.data.fieldsImage.date || { 'one': '', 'two': '', 'three': '' };
                 collection.id = _id;
                 //console.log("collection ", collection)
                 this.setState({
                     show: !this.state.show,
                     headerModal: 'Edit Collection',
-                    typeModal: 'edit'  
+                    typeModal: 'edit'
                 });
             })
             .catch(err => {
                 console.log(err);
             });
     }
-
-    
 
     showCollections() {
         const wrapp = new Wrapper();
@@ -142,13 +142,14 @@ export default class User extends Component {
 
 
     render() {
+        console.log("avatar render ", localStorage.getItem('avatar'))
         return (
             <>
                 <div className="divSetting">
                     <Container>
                         <div className="row divSettingTool">
                             <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 divSettingTool" >
-                                <img src={user_img} alt="userDefault" height="100" vspace="10" />
+                                <img className="roundImg" src={localStorage.getItem('avatar')} alt="Avatar User" height="100" vspace="10" />
                             </div>
                             <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 divSettingTool" >
                                 <h1 style={{ marginLeft: 30 + 'px', marginRight: 30 + 'px' }}>{this.state.username}</h1>
@@ -174,10 +175,10 @@ export default class User extends Component {
                                             <Card.Title>Add new collection</Card.Title>
                                             <Container className="d-flex justify-content-center ">
                                                 <Button variant="link" onClick={this.handleShowNewCol.bind(this)} >
-                                                    <Image src={plus1_img} height="90" />
+                                                    <Image src={plus1_img} height="120" />
                                                 </Button>
                                             </Container>
-                                        </Card.Body>  
+                                        </Card.Body>
                                     </Card>
                                     <NewCollectionModal
                                         show={this.state.show}

@@ -33,6 +33,7 @@ class Header extends Component {
         localStorage.setItem("id", '');
         localStorage.setItem('role', '');
         localStorage.setItem('isLoggedIn', false);
+        localStorage.setItem('avatar', '');
     }
 
 
@@ -57,6 +58,9 @@ class Header extends Component {
                             </Nav>
                             <form className="form-inline">
                                 <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
+                            </form>
+                            <form className="form-inline">
+                                <img className="roundImg" src={this.props.user.avatar} alt="Avatar User" height="30"  />
                             </form>
                             <Form inline>
                                 <NavDropdown title={this.props.user.username} variant="Secondary">

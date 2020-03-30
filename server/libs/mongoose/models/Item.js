@@ -3,15 +3,19 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const Item = new Schema({
-    name: { 
-        type: String, 
-        required: true 
+    title: {
+        type: String,
+        required: true
     },
-    author: { 
-        type: String, 
-        required: true 
+    author: {
+        type: String,
+        required: true
     },
-    tags: [String],
+    authorId: {
+        type: String,
+        required: true
+    },
+    tags: [Object],
     fieldsItem: {
         type: Object,
         required: false
@@ -21,13 +25,22 @@ const Item = new Schema({
         required: true,
         default: Date.now
     },
-    img: { 
-        data: Buffer, 
-        contentType: String 
+    img: {
+        data: Buffer,
+        contentType: String
+    },
+    topic: {
+        type: String,
+        required: true
     }
-    
+
 });
+
+Item.virtual('itemId')
+    .get(function () {
+        return this.id;
+    });
 
 const ItemModel = mongoose.model('Item', Item);
 
-module.exports.ItemModel = ItemModel;
+module.exports = ItemModel;

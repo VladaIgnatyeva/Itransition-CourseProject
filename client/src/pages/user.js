@@ -101,10 +101,10 @@ export default class User extends Component {
                 collection.topic = res.data.topic;
                 collection.cover = res.data.cover;
                 collection.checkbox = res.data.fieldsImage.checkbox || {};
-                collection.number = res.data.fieldsImage.number || { 'one': '', 'two': '', 'three': '' };
-                collection.string = res.data.fieldsImage.string || { 'one': '', 'two': '', 'three': '' };
-                collection.text = res.data.fieldsImage.text || { 'one': '', 'two': '', 'three': '' };
-                collection.date = res.data.fieldsImage.date || { 'one': '', 'two': '', 'three': '' };
+                collection.number = res.data.fieldsImage.number || {};
+                collection.string = res.data.fieldsImage.string || {};
+                collection.text = res.data.fieldsImage.text || {};
+                collection.date = res.data.fieldsImage.date || {};
                 collection.id = _id;
                 //console.log("collection ", collection)
                 this.setState({

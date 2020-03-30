@@ -13,6 +13,7 @@ require('./libs/auth/passport');
 const api = require('./libs/routes/api');
 const users = require('./libs/routes/users');
 const oauth = require('./libs/routes/oauth');
+const tags = require('./libs/routes/tags');
 const collections = require('./libs/routes/collections');
 
 const app = express();
@@ -27,6 +28,7 @@ app.use('/api', api);
 app.use('/api', oauth);
 app.use('/api/users', users);
 app.use('/api/collections', collections);
+app.use('/api/tags', tags);
 
 
 app.listen(config.get('port'), () => {

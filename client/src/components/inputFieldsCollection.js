@@ -14,13 +14,13 @@ class InputFieldsCollection extends Component {
             <Container>
                 <Form.Group >
                     <Form.Group >
-                        <Form.Control type="text" placeholder=" "  name="one" defaultValue={this.props.value.one}/>
+                        <Form.Control type="text"  name="one" defaultValue={this.props.value.one}/>
                     </Form.Group>
                     <Form.Group >
-                        <Form.Control type="text" placeholder=" "  name="two" defaultValue={this.props.value.two}/>
+                        <Form.Control type="text"  name="two" defaultValue={this.props.value.two}/>
                     </Form.Group>
                     <Form.Group >
-                        <Form.Control type="text" placeholder=" "  name="three" defaultValue={this.props.value.three}/>
+                        <Form.Control type="text"  name="three" defaultValue={this.props.value.three}/>
                     </Form.Group>
                 </Form.Group>
             </Container>

@@ -1,16 +1,46 @@
 const mongoose = require('mongoose');
-const Item = require('./Item');
+//const Item = require('./Item');
 
 const Schema = mongoose.Schema;
 
-const Images = new Schema({
-    kind: {
+const Item = new Schema({
+    title: {
         type: String,
-        enum: ['thumbnail', 'detail'],
         required: true
     },
-    url: { type: String, required: true }
+    author: {
+        type: String,
+        required: true
+    },
+    authorId: {
+        type: String,
+        required: true
+    },
+    tags: [Object],
+    fieldsItem: {
+        type: Object,
+        required: false
+    },
+    modified: {
+        type: Date,
+        required: true,
+        default: Date.now
+    },
+    img: {
+        data: Buffer,
+        contentType: String
+    },
+    topic: {
+        type: String,
+        required: true
+    }
+
 });
+
+Item.virtual('itemId')
+    .get(function () {
+        return this.id;
+    });
 
 const Collection = new Schema({
     title: {
@@ -29,10 +59,7 @@ const Collection = new Schema({
         type: String,
         required: true
     },
-    items: {
-        type: Object,
-        required: false
-    },
+    items: [Item],
     fieldsImage: {
         type: Object,
         required: false

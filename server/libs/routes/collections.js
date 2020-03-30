@@ -5,6 +5,7 @@ const router = express.Router();
 const db = require('../mongoose/mongoose');
 const log = require('../log')(module);
 const Collection = require('../mongoose/models/Collection');
+const Item = require('../mongoose/models/Item');
 
 router.get('/', function (req, res) {
 
@@ -98,6 +99,61 @@ router.delete('/:id', function (req, res) {
     log.info(`Delete collection with id: ${req.body.data}`);
     Collection.findOne({ _id: req.body.data })
         .deleteOne()
+        .then(data => res.json(data))
+        .catch(err => res.status(400).send(err));
+});
+
+router.post('/collection/:id/item', function (req, res) {
+    const item = new Item({
+        title: req.body.title,
+        author: req.body.author,
+        authorId: req.body.authorId,
+        img: req.body.img,
+        fieldsItem: req.body.fieldsItem,
+        topic: req.body.topic,
+        tags: req.body.tags
+    });
+
+    Collection.findByIdAndUpdate(req.body._idCollection , {
+        $push: {
+           "items" : item
+        }
+    })
+        .then(data => res.json(data))
+        .catch(err => res.status(400).send(err));
+
+    /*item.save(function (err) {
+        if (!err) {
+            log.info(`User ${item.author} created item with id: ${item.itemId}`);
+            return res.json(item);
+        } else {
+            if (err.name === 'ValidationError') {
+                res.statusCode = 400;
+                res.json({
+                    error: 'Validation error'
+                });
+            } else {
+                res.statusCode = 500;
+
+                log.error(`Internal error(${res.statusCode}): ${err.message}`);
+
+                res.json({
+                    error: 'Server error'
+                });
+            }
+        }
+    });*/
+});
+
+router.put('/items/:itemId', function (req, res) {
+    Item.updateOne({ _id: req.body._id }, {
+        $set: {
+            title: req.body.title,
+            img: req.body.img,
+            fieldsImage: req.body.fieldsImage,
+        
+        }
+    })
         .then(data => res.json(data))
         .catch(err => res.status(400).send(err));
 });

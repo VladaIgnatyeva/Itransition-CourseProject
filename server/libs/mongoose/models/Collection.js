@@ -27,8 +27,8 @@ const Item = new Schema({
         default: Date.now
     },
     img: {
-        data: Buffer,
-        contentType: String
+        type: String,
+        required: false
     },
     topic: {
         type: String,

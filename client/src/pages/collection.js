@@ -37,16 +37,19 @@ export default class Collection extends Component {
         //console.log("Store redux home:  ", store.getState());
     }
 
-    clearItemModel() {/*
+    clearItemModel() {
         item = {
             title: '',
-            checkbox: { 'one': '', 'two': '', 'three': '' },
-            number: { 'one': '', 'two': '', 'three': '' },
-            string: { 'one': '', 'two': '', 'three': '' },
-            text: { 'one': '', 'two': '', 'three': '' },
-            date: { 'one': '', 'two': '', 'three': '' },
-            id: ''
-        };*/
+            img: '',
+            fieldsItem: {
+                checkbox: {},
+                number: {},
+                string: {},
+                text: {},
+                date: {},
+            },
+            tags: [],
+        };
     }
 
     changeStateUpdate() {
@@ -73,42 +76,12 @@ export default class Collection extends Component {
     }
 
 
-    deleteItem(id) {/*
-        const wrapp = new Wrapper();
-        wrapp.delete(`api/collections/${id}`, id)
-            .then(res => {
-                this.changeStateUpdate();
-            })
-            .catch(err => {
-                console.log(err);
-            });*/
+    deleteItem(id) {
+
     }
 
     editItem(_id) {
-        //console.log("id ", _id)
-        /* const wrapp = new Wrapper();
-         wrapp.get(`api/collections/${_id}`, _id)
-             .then(res => {
-                 collection.title = res.data.title;
-                 collection.description = res.data.description;
-                 collection.topic = res.data.topic;
-                 collection.cover = res.data.cover;
-                 collection.checkbox = res.data.fieldsImage.checkbox || {};
-                 collection.number = res.data.fieldsImage.number || { 'one': '', 'two': '', 'three': '' };
-                 collection.string = res.data.fieldsImage.string || { 'one': '', 'two': '', 'three': '' };
-                 collection.text = res.data.fieldsImage.text || { 'one': '', 'two': '', 'three': '' };
-                 collection.date = res.data.fieldsImage.date || { 'one': '', 'two': '', 'three': '' };
-                 collection.id = _id;
-                 //console.log("collection ", collection)
-                 this.setState({
-                     show: !this.state.show,
-                     headerModal: 'Edit Collection',
-                     typeModal: 'edit'
-                 });
-             })
-             .catch(err => {
-                 console.log(err);
-             });*/
+       
     }
 
     showItems() {
@@ -124,7 +97,7 @@ export default class Collection extends Component {
                     authorId: res.data.authorId,
                     items: res.data.items || []
                 });
-                // console.log("collection ", res.data)
+                //console.log("collection ", res.data)
             })
             .catch(err => {
                 console.log(err);
@@ -134,6 +107,7 @@ export default class Collection extends Component {
 
     componentDidMount() {
         this.showItems();
+        this.clearItemModel();
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -170,16 +144,18 @@ export default class Collection extends Component {
                     <Container>
                         <div className="collectionContainer" style={{ marginTop: 20 + 'px' }}>
                             Toolbar
-
                             <Button variant="dark" onClick={this.handleShowNewItem.bind(this)}> Add </Button>
                         </div>
                     </Container>
 
                     <Container>
                         <div className="collectionContainer">
-                            Images
+                            Items
+                            {//console.log('items  1', this.state.items)
+                            }
                             {
                                 this.state.items.map(item => {
+                                   // console.log('items  1', item)
                                     return <div className=" card-deck col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-4" style={{ marginTop: 3 + '%' }} key={item._id}>
                                         <CardItem
                                             item={item}
@@ -196,6 +172,8 @@ export default class Collection extends Component {
                                 type={this.state.typeModal}
                                 item={item}
                                 fields={this.state.fieldsImage}
+                                topic={this.state.topic}
+                                collectionId={this.state.idCollection}
                             />
                         </div>
 

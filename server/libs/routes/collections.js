@@ -27,10 +27,12 @@ router.get('/:id', function (req, res) {
         topic: 1,
         cover: '',
         fieldsImage: 1,
-        author : 1,
-        authorId : 1
+        author: 1,
+        authorId: 1,
+        items: [], 
+        
     })
-        .then(data => {console.log(data); res.json(data)})
+        .then(data => { res.json(data) })
         .catch(err => res.status(400).send(err));
 });
 
@@ -55,7 +57,8 @@ router.put('/:id', function (req, res) {
             cover: req.body.cover,
             fieldsImage: req.body.fieldsImage
         }
-    })
+    }, 
+    { useFindAndModify: false })
         .then(data => res.json(data))
         .catch(err => res.status(400).send(err));
 });
@@ -104,6 +107,7 @@ router.delete('/:id', function (req, res) {
 });
 
 router.post('/collection/:id/item', function (req, res) {
+    console.log('new item req', req.body)
     const item = new Item({
         title: req.body.title,
         author: req.body.author,
@@ -111,14 +115,16 @@ router.post('/collection/:id/item', function (req, res) {
         img: req.body.img,
         fieldsItem: req.body.fieldsItem,
         topic: req.body.topic,
-        tags: req.body.tags
+        tags: req.body.tags,
+        img: req.body.img
     });
 
-    Collection.findByIdAndUpdate(req.body._idCollection , {
+    console.log('new item', item)
+    Collection.findByIdAndUpdate(req.body._idCollection, {
         $push: {
-           "items" : item
+            "items": item
         }
-    })
+    }, { useFindAndModify: false })
         .then(data => res.json(data))
         .catch(err => res.status(400).send(err));
 
@@ -151,7 +157,7 @@ router.put('/items/:itemId', function (req, res) {
             title: req.body.title,
             img: req.body.img,
             fieldsImage: req.body.fieldsImage,
-        
+
         }
     })
         .then(data => res.json(data))

@@ -67,12 +67,6 @@ const NewCollectionModal = (props) => {
         //console.log(parametrs);
     }
 
-    function handleChange2(event, data) {
-        //parametrs[data][event.target.name] = event.target.value
-        parametrs.fields = event.target.value
-        console.log(parametrs);
-    }
-
     function updateFields(fields) {
         console.log('field add', fields)
         parametrs.fields = fields;
@@ -81,7 +75,6 @@ const NewCollectionModal = (props) => {
     function setCover(url) {
         parametrs.cover = url;
     }
-
 
 
     return (
@@ -129,7 +122,7 @@ const NewCollectionModal = (props) => {
                             </Form.Control>
                         </Form.Group>
 
-                        <AddingFields updateFields={updateFields}/>
+                        <AddingFields updateFields={updateFields} fields={parametrs.fields}/>
                     </Container>
                 </Modal.Body>
                 <Modal.Footer>

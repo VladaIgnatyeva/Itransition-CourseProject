@@ -16,12 +16,9 @@ class AddingFields extends React.Component {
     addField() {
         const name = inputFieldsName.current.value;
         const type = inputFieldsType.current.value;
-        //console.log('type', type);
         if (name != '') {
             this.setState(state => ({ fields: [...state.fields, { 'id': new Date().getMilliseconds(), 'type': type, 'name': name, 'value': '' }] }));
         }
-
-
     }
 
     deleteField(id) {
@@ -33,15 +30,17 @@ class AddingFields extends React.Component {
             return {
                 fields: newArray
             }
-        })
-
-        
+        })        
     }
 
     componentDidUpdate(prevProps, prevState) {
         if (this.state.fields !== prevState.fields) {
             this.props.updateFields(this.state.fields);
         }
+    }
+
+    componentDidMount(){
+        this.setState({fields : this.props.fields})
     }
 
     render() {

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Modal, Button, Card, Container, Image, Form, Tab, Nav, Col, Row } from "react-bootstrap";
-import InputFieldsCollection from '../components/inputFieldsCollection';
 import DndFile from './dndFile';
 import Wrapper from '../utils/wrapperAxios';
 import Tags from '../components/tags';
@@ -59,13 +58,7 @@ const ModalItem = (props) => {
                 _id: parametrs.id,
                 title: parametrs.title,
                 tags: parametrs.tags,
-                fieldsItem: {
-                    checkbox: parametrs.checkbox,
-                    number: parametrs.number,
-                    string: parametrs.string,
-                    text: parametrs.text,
-                    date: parametrs.date
-                },
+                fields: parametrs.fields,
                 img: parametrs.img
             }
 

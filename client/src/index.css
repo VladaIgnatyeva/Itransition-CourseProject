@@ -270,3 +270,16 @@ div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
 .tagFooter {
   display: inline;
 }
+
+.fieldsList{
+  display: flex;
+  flex-direction: row;
+  
+  
+}
+
+.buttonX{
+  transform: scale(0.75);
+  background: #9ea7ad;
+  margin-left: 2px;
+}

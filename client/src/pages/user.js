@@ -46,11 +46,12 @@ export default class User extends Component {
             title: '',
             description: '',
             topic: 'Books',
-            checkbox: { 'one': '', 'two': '', 'three': '' },
+            fields: [],
+            /*checkbox: { 'one': '', 'two': '', 'three': '' },
             number: { 'one': '', 'two': '', 'three': '' },
             string: { 'one': '', 'two': '', 'three': '' },
             text: { 'one': '', 'two': '', 'three': '' },
-            date: { 'one': '', 'two': '', 'three': '' },
+            date: { 'one': '', 'two': '', 'three': '' },*/
             cover: 'https://res.cloudinary.com/dvfmqld3v/image/upload/w_300,h_200/logoDefault_chafgb',
             id: ''
         };
@@ -100,11 +101,11 @@ export default class User extends Component {
                 collection.description = res.data.description;
                 collection.topic = res.data.topic;
                 collection.cover = res.data.cover;
-                collection.checkbox = res.data.fieldsImage.checkbox || {};
-                collection.number = res.data.fieldsImage.number || {};
+                collection.fields = res.data.fields;
+               /* collection.number = res.data.fieldsImage.number || {};
                 collection.string = res.data.fieldsImage.string || {};
                 collection.text = res.data.fieldsImage.text || {};
-                collection.date = res.data.fieldsImage.date || {};
+                collection.date = res.data.fieldsImage.date || {};*/
                 collection.id = _id;
                 //console.log("collection ", collection)
                 this.setState({

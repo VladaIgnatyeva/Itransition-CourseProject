@@ -1,25 +1,14 @@
-import React, { Component } from "react";
-import { Modal, Button, Card, Container, Image, Form, Tab, Nav, Col, Row } from "react-bootstrap";
-import InputFieldsCollection from '../components/inputFieldsCollection';
+import React from "react";
+import { Modal, Button, Card, Container,  Form, } from "react-bootstrap";
 import DndFile from './dndFile';
 import Wrapper from '../utils/wrapperAxios';
-
+import AddingFields from './addingFields'
 
 const NewCollectionModal = (props) => {
-    const { show, handleShow, header, type, collection , changeStateUpdate} = props;
-    /*let parametrs = {
-        title: '',
-        description: 'ytr',
-        topic: 'Books',
-        checkbox: {},
-        number: {},
-        string: {},
-        text: {},
-        date: {},
-        cover: 'https://res.cloudinary.com/dvfmqld3v/image/upload/w_300,h_200/logoDefault_chafgb'
+    const { show, handleShow, header, type, collection, changeStateUpdate } = props;
 
-    };*/
     let parametrs = collection;
+
 
     const saveCollection = (type) => {
         let someElement = document.getElementById("textErrorModal");
@@ -28,22 +17,17 @@ const NewCollectionModal = (props) => {
             if (parametrs.title === '' || parametrs.description === '') {
                 someElement.innerHTML = 'Fill in all the fields with *';
             } else {
+                console.log("paramentrs ", parametrs);
                 const newCollection = {
                     title: parametrs.title,
                     author: localStorage.getItem('username'),
                     authorId: localStorage.getItem('id'),
                     description: parametrs.description,
-                    fieldsImage: {
-                        checkbox: parametrs.checkbox,
-                        number: parametrs.number,
-                        string: parametrs.string,
-                        text: parametrs.text,
-                        date: parametrs.date
-                    },
+                    fields: parametrs.fields,
                     topic: parametrs.topic,
                     cover: parametrs.cover
                 }
-
+                console.log("newCollection ", newCollection);
                 const wrapp = new Wrapper();
                 wrapp.post('api/collections/collection', newCollection)
                     .then(res => {
@@ -62,25 +46,19 @@ const NewCollectionModal = (props) => {
                 description: parametrs.description,
                 topic: parametrs.topic,
                 cover: parametrs.cover,
-                fieldsImage: {
-                    checkbox: parametrs.checkbox,
-                    number: parametrs.number,
-                    string: parametrs.string,
-                    text: parametrs.text,
-                    date: parametrs.date
-                },
+                fields: parametrs.fields,
             }
 
             const wrapp = new Wrapper();
             wrapp.put(`api/collections/${parametrs.id}`, updateCollection)
                 .then(res => {
                     //console.log("response update collection", res.data);
-                    handleShow();        
+                    handleShow();
                 })
                 .catch(err => {
                     someElement.innerHTML = err;
                 })
-            
+
         }
     }
 
@@ -90,13 +68,20 @@ const NewCollectionModal = (props) => {
     }
 
     function handleChange2(event, data) {
-        parametrs[data][event.target.name] = event.target.value
+        //parametrs[data][event.target.name] = event.target.value
+        parametrs.fields = event.target.value
         console.log(parametrs);
+    }
+
+    function updateFields(fields) {
+        console.log('field add', fields)
+        parametrs.fields = fields;
     }
 
     function setCover(url) {
         parametrs.cover = url;
     }
+
 
 
     return (
@@ -114,12 +99,12 @@ const NewCollectionModal = (props) => {
                         </Form.Group>
                         <Form.Group >
                             <Form.Label>Collection title:*</Form.Label>
-                            <Form.Control 
-                                type="text" 
-                                placeholder="Title" 
-                                name="title" 
-                                onChange={(e) => handleChange(e)} 
-                                defaultValue={parametrs.title} 
+                            <Form.Control
+                                type="text"
+                                placeholder="Title"
+                                name="title"
+                                onChange={(e) => handleChange(e)}
+                                defaultValue={parametrs.title}
                             />
                         </Form.Group>
                         <Form.Group controlId="exampleForm.ControlTextarea1">
@@ -144,51 +129,7 @@ const NewCollectionModal = (props) => {
                             </Form.Control>
                         </Form.Group>
 
-                        <Form.Group >
-                            <Form.Label>Item fields (Optionals)</Form.Label>
-                            <Tab.Container id="left-tabs-example" defaultActiveKey="numberFields">
-                                <Row>
-                                    <Col sm={4}>
-                                        <Nav variant="pills" className="flex-column">
-                                            <Nav.Item>
-                                                <Nav.Link eventKey="numberFields">Number</Nav.Link>
-                                            </Nav.Item>
-                                            <Nav.Item>
-                                                <Nav.Link eventKey="stringFields" >String</Nav.Link>
-                                            </Nav.Item>
-                                            <Nav.Item>
-                                                <Nav.Link eventKey="textareaFields" >Textarea</Nav.Link>
-                                            </Nav.Item>
-                                            <Nav.Item>
-                                                <Nav.Link eventKey="checkboxFields" >Checkbox</Nav.Link>
-                                            </Nav.Item>
-                                            <Nav.Item>
-                                                <Nav.Link eventKey="dateFields" >Date</Nav.Link>
-                                            </Nav.Item>
-                                        </Nav>
-                                    </Col>
-                                    <Col sm={8}>
-                                        <Tab.Content>
-                                            <Tab.Pane eventKey="numberFields" onChange={(e) => handleChange2(e, 'number')} >
-                                                <InputFieldsCollection value={parametrs.number} />
-                                            </Tab.Pane>
-                                            <Tab.Pane eventKey="stringFields" onChange={(e) => handleChange2(e, 'string')}>
-                                                <InputFieldsCollection value={parametrs.string} />
-                                            </Tab.Pane>
-                                            <Tab.Pane eventKey="textareaFields" onChange={(e) => handleChange2(e, 'text')}>
-                                                <InputFieldsCollection value={parametrs.text} />
-                                            </Tab.Pane>
-                                            <Tab.Pane eventKey="checkboxFields" onChange={(e) => handleChange2(e, 'checkbox')}>
-                                                <InputFieldsCollection value={parametrs.checkbox} />
-                                            </Tab.Pane>
-                                            <Tab.Pane eventKey="dateFields" onChange={(e) => handleChange2(e, 'date')}>
-                                                <InputFieldsCollection value={parametrs.date} />
-                                            </Tab.Pane>
-                                        </Tab.Content>
-                                    </Col>
-                                </Row>
-                            </Tab.Container>
-                        </Form.Group>
+                        <AddingFields updateFields={updateFields}/>
                     </Container>
                 </Modal.Body>
                 <Modal.Footer>
@@ -206,3 +147,50 @@ const NewCollectionModal = (props) => {
 };
 
 export default NewCollectionModal
+
+
+
+/*<Tab.Container id="left-tabs-example" defaultActiveKey="numberFields">
+                    <Row>
+                        <Col sm={4}>
+                            <Nav variant="pills" className="flex-column">
+                                <Nav.Item>
+                                    <Nav.Link eventKey="numberFields">Number</Nav.Link>
+                                </Nav.Item>
+                                <Nav.Item>
+                                    <Nav.Link eventKey="stringFields" >String</Nav.Link>
+                                </Nav.Item>
+                                <Nav.Item>
+                                    <Nav.Link eventKey="textareaFields" >Textarea</Nav.Link>
+                                </Nav.Item>
+                                <Nav.Item>
+                                    <Nav.Link eventKey="checkboxFields" >Checkbox</Nav.Link>
+                                </Nav.Item>
+                                <Nav.Item>
+                                    <Nav.Link eventKey="dateFields" >Date</Nav.Link>
+                                </Nav.Item>
+                            </Nav>
+                        </Col>
+                        <Col sm={8}>
+                            <Tab.Content>
+                                <Tab.Pane eventKey="numberFields" onChange={(e) => handleChange2(e, 'number')} >
+                                    <InputFieldsCollection value={parametrs.number} />
+                                </Tab.Pane>
+                                <Tab.Pane eventKey="stringFields" onChange={(e) => handleChange2(e, 'string')}>
+                                    <InputFieldsCollection value={parametrs.string} />
+                                </Tab.Pane>
+                                <Tab.Pane eventKey="textareaFields" onChange={(e) => handleChange2(e, 'text')}>
+                                    <InputFieldsCollection value={parametrs.text} />
+                                </Tab.Pane>
+                                <Tab.Pane eventKey="checkboxFields" onChange={(e) => handleChange2(e, 'checkbox')}>
+                                    <InputFieldsCollection value={parametrs.checkbox} />
+                                </Tab.Pane>
+                                <Tab.Pane eventKey="dateFields" onChange={(e) => handleChange2(e, 'date')}>
+                                    <InputFieldsCollection value={parametrs.date} />
+                                </Tab.Pane>
+                            </Tab.Content>
+                        </Col>
+                    </Row>
+                </Tab.Container>
+
+                */

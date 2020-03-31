@@ -10,6 +10,7 @@ import Tags from '../components/tags';
 const ModalItem = (props) => {
     const { show, handleShow, header, type, item, changeStateUpdate, collectionId, fields, topic} = props;
 
+    
     let parametrs = item;
     //console.log('param start ', parametrs, item)
    /* parametrs.fieldsItem = {}

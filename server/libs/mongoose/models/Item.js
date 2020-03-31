@@ -15,9 +15,9 @@ const Item = new Schema({
         type: String,
         required: true
     },
-    tags: [Object],
-    fieldsItem: {
-        type: Object,
+    tags: [Array],
+    fields: {
+        type: Array,
         required: false
     },
     modified: {

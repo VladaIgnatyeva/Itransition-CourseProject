@@ -16,9 +16,9 @@ const Item = new Schema({
         type: String,
         required: true
     },
-    tags: [Object],
-    fieldsItem: {
-        type: Object,
+    tags: [Array],
+    fields: {
+        type: Array,
         required: false
     },
     modified: {
@@ -60,8 +60,8 @@ const Collection = new Schema({
         required: true
     },
     items: [Item],
-    fieldsImage: {
-        type: Object,
+    fields: {
+        type: Array,
         required: false
     },
     topic: {

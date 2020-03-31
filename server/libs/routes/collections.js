@@ -26,7 +26,7 @@ router.get('/:id', function (req, res) {
         description: 1,
         topic: 1,
         cover: '',
-        fieldsImage: 1,
+        fields: 1,
         author: 1,
         authorId: 1,
         items: [], 
@@ -55,7 +55,7 @@ router.put('/:id', function (req, res) {
             description: req.body.description,
             topic: req.body.topic,
             cover: req.body.cover,
-            fieldsImage: req.body.fieldsImage
+            fields: req.body.fields
         }
     }, 
     { useFindAndModify: false })
@@ -70,7 +70,7 @@ router.post('/collection', function (req, res) {
         authorId: req.body.authorId,
         description: req.body.description,
         items: req.body.items,
-        fieldsImage: req.body.fieldsImage,
+        fields: req.body.fields,
         topic: req.body.topic,
         cover: req.body.cover
     });
@@ -107,19 +107,19 @@ router.delete('/:id', function (req, res) {
 });
 
 router.post('/collection/:id/item', function (req, res) {
-    console.log('new item req', req.body)
+    //console.log('new item req', req.body)
     const item = new Item({
         title: req.body.title,
         author: req.body.author,
         authorId: req.body.authorId,
         img: req.body.img,
-        fieldsItem: req.body.fieldsItem,
+        fields: req.body.fields,
         topic: req.body.topic,
         tags: req.body.tags,
         img: req.body.img
     });
 
-    console.log('new item', item)
+    //console.log('new item', item)
     Collection.findByIdAndUpdate(req.body._idCollection, {
         $push: {
             "items": item
@@ -156,7 +156,7 @@ router.put('/items/:itemId', function (req, res) {
         $set: {
             title: req.body.title,
             img: req.body.img,
-            fieldsImage: req.body.fieldsImage,
+            fields: req.body.fields,
 
         }
     })

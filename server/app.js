@@ -32,8 +32,8 @@ app.get('*', (req,res) =>{
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 
-app.listen(config.get('port'), () => {
-    log.info(`Server is up and running on port ${config.get('port')}`);
+app.listen(config.get('PORT'), () => {
+    log.info(`Server is up and running on port ${config.get('PORT')}`);
 });
 
 app.use(function (req, res, next) {

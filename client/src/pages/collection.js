@@ -160,18 +160,17 @@ export default class Collection extends Component {
                     </Container>
 
                     <Container>
-                        <div className="collectionContainer" style={{ marginTop: 20 + 'px' }}>
-                            Toolbar
+                        <div className="collectionContainer d-flex flex-row justify-content-around" style={{ marginTop: 20 + 'px' }}>
+                            <h4>Toolbar</h4>
                             <Button variant="dark" onClick={this.handleShowNewItem.bind(this)}> Add </Button>
                         </div>
                     </Container>
 
                     <Container>
-                        <div className="row ">
-                            Items
+                        <h4 style={{ marginTop: 50 + 'px' }}>Items</h4>
+                        <div className="row ">     
                             {
                                 this.state.items.map(item => {
-                                   // console.log('items  1', item)
                                     return <div className=" card-deck col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-4" style={{ marginTop: 3 + '%' }} key={item._id }>
                                         <CardItem
                                             deleteItem={this.deleteItem.bind(this)}

@@ -161,6 +161,10 @@ export default class UsersPage extends Component {
             })
     }
 
+    createLink(id){
+        return `/user/${id}`
+    }
+    
     render() {
         return (
             <>
@@ -192,7 +196,7 @@ export default class UsersPage extends Component {
                                             return <tr key={user._id}>
                                                 <td><Form.Check type="checkbox" className="check" id={user._id} /></td>
                                                 <td id={user._id}>{user._id}</td>
-                                                <td><a href="/user">{user.username}</a></td>
+                                                <td><a href={this.createLink(user._id)}>{user.username}</a></td>
                                                 <td >{user.email}</td>
                                                 <td>{user.role}</td>
                                             </tr>

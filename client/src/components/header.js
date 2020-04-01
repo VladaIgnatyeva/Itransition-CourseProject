@@ -42,7 +42,7 @@ class Header extends Component {
         //console.log(" this.props.user store", this.props.user)
         
         if (this.props.user.isLoggedInStatus && this.props.user.isLoggedInStatus != "false") {
-
+            let link = `/user/${localStorage.getItem('id')}`;
             return (
                 <Navbar collapseOnSelect expand="md" bg="dark" variant="dark">
                     <Container>
@@ -65,12 +65,12 @@ class Header extends Component {
                             <Form inline>
                                 <NavDropdown title={this.props.user.username} variant="Secondary">
                                     <NavDropdown.Divider />
-                                    <LinkContainer to="/user">
+                                    <LinkContainer to={link}>
                                         <NavDropdown.Item >
                                             Your profile
                                         </NavDropdown.Item>
                                     </LinkContainer>
-                                    <LinkContainer to="/user">
+                                    <LinkContainer to={link}>
                                         <NavDropdown.Item >
                                             Your collection
                                         </NavDropdown.Item>
@@ -83,7 +83,7 @@ class Header extends Component {
                                     <NavDropdown.Divider />
                                 </NavDropdown>
 
-                                <LinkContainer to='/user'>
+                                <LinkContainer to={link}>
                                     <Button variant="outline-info" style={{ marginLeft: 25 + 'px' }}>
                                         Upload
                                     </Button>

@@ -53,7 +53,7 @@ export default class SignIn extends Component {
                     store.dispatch(loggedIn({username: res.data.username, role: res.data.role, id:res.data.id, isLoggedInStatus: true, avatar:res.data.avatar}));
                     console.log("Store redux login:  ", store.getState());
 
-                    this.props.history.push("/user");
+                    this.props.history.push(`/user/${res.data.id}`);
                 })
                 .catch(err => {
                     someElement.innerHTML = err.response.data;

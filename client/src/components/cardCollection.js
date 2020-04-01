@@ -22,10 +22,44 @@ class CardCollection extends Component {
         this.props.deleteCollection(this.state.item._id);
     }
 
-    render() {
+    getCardBody() {
         const linkCollection = `/collection/${this.state.item._id}`
+        return <div className="media-body">
+            <Card.Body>
+                <Card.Title>{this.state.item.title}</Card.Title>
+                <Card.Subtitle className="mb-2 text-muted">{this.state.item.topic}</Card.Subtitle>
+                <div>
+                    <ReactMarkdown source={this.state.item.description} escapeHtml={false} />{' '}
+                </div>
+                <LinkContainer to={linkCollection}>
+                    <a className="btn btn-secondary stretched-link">Go </a>
+                </LinkContainer>
+
+            </Card.Body>
+        </div>
+    }
+
+    showCardTool() {
+        
+        if (this.state.item.authorId === localStorage.getItem('id') || localStorage.getItem('role') === 'admin') {
+            return <div className='media position-relative'>
+                {this.getCardBody()}
+            </div>
+        }
+        else return <div className='media '>
+            {this.getCardBody()}
+        </div>
+    }
+
+    componentDidMount() {
+
+    }
+
+    render() {
+
         return (
             <Card >
+
                 <div className="cardImg ">
                     <div className="cardTool">
                         <button type="button" className="btn btn-outline-light " id="btnEdit" onClick={this.editCollection.bind(this)}>
@@ -38,21 +72,7 @@ class CardCollection extends Component {
                     <Card.Img variant="top" src={this.state.item.cover} className="cardImg" />
                 </div>
 
-                <div className="media position-relative">
-                    <div className="media-body">
-                        <Card.Body>
-                            <Card.Title>{this.state.item.title}</Card.Title>
-                            <Card.Subtitle className="mb-2 text-muted">{this.state.item.topic}</Card.Subtitle>
-                            <div>
-                                <ReactMarkdown source={this.state.item.description} escapeHtml={false} />{' '}
-                            </div>
-                            <LinkContainer to={linkCollection}>
-                                <a className="btn btn-secondary stretched-link">Go </a>
-                            </LinkContainer>
-                            
-                        </Card.Body>
-                    </div>
-                </div>
+                {this.showCardTool()}
             </Card >
         )
     }

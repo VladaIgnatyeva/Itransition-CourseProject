@@ -61,7 +61,7 @@ export default class SignUp extends Component {
                     localStorage.setItem("username", res.data.username);
                     localStorage.setItem("id", res.data.id);
 
-                    this.props.history.push("/user");
+                    this.props.history.push(`/user/${res.data.id}`);
                 })
                 .catch(err => {
                     someElement.innerHTML = err;

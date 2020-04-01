@@ -71,7 +71,7 @@ const App = (props) => {
       />
       <Route
         exact
-        path="/user/:idUser?"
+        path="/user/:idUser"
         component={User}
       />
 

@@ -1,12 +1,10 @@
 import React, { Component, useState } from 'react';
-import { Button, Form, Navbar, Container, Nav, CardDeck, Image, Card, CardGroup } from 'react-bootstrap';
-import user_img from '../assets/userDefault.png';
+import { Button,  Container, Image, Card } from 'react-bootstrap';
 import pen_img from '../assets/pen.png';
 import queryString from 'query-string';
 import getStore from '../store/configureStore';
-import { loggedIn, toggleTheme, toggleLanguage } from '../action/index';
+import { loggedIn} from '../action/index';
 import { LinkContainer } from 'react-router-bootstrap'
-import AddCardCollection from '../components/addCardCollection'
 import CardCollection from '../components/cardCollection'
 import Wrapper from '../utils/wrapperAxios';
 import NewCollectionModal from '../components/newCollectionModal';
@@ -47,11 +45,6 @@ export default class User extends Component {
             description: '',
             topic: 'Books',
             fields: [],
-            /*checkbox: { 'one': '', 'two': '', 'three': '' },
-            number: { 'one': '', 'two': '', 'three': '' },
-            string: { 'one': '', 'two': '', 'three': '' },
-            text: { 'one': '', 'two': '', 'three': '' },
-            date: { 'one': '', 'two': '', 'three': '' },*/
             cover: 'https://res.cloudinary.com/dvfmqld3v/image/upload/w_300,h_200/logoDefault_chafgb',
             id: ''
         };
@@ -102,10 +95,6 @@ export default class User extends Component {
                 collection.topic = res.data.topic;
                 collection.cover = res.data.cover;
                 collection.fields = res.data.fields;
-               /* collection.number = res.data.fieldsImage.number || {};
-                collection.string = res.data.fieldsImage.string || {};
-                collection.text = res.data.fieldsImage.text || {};
-                collection.date = res.data.fieldsImage.date || {};*/
                 collection.id = _id;
                 //console.log("collection ", collection)
                 this.setState({

@@ -17,7 +17,7 @@ const NewCollectionModal = (props) => {
             if (parametrs.title === '' || parametrs.description === '') {
                 someElement.innerHTML = 'Fill in all the fields with *';
             } else {
-                console.log("paramentrs ", parametrs);
+                //console.log("paramentrs ", parametrs);
                 const newCollection = {
                     title: parametrs.title,
                     author: localStorage.getItem('username'),

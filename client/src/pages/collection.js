@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import { Button, Form, Navbar, Container, Nav } from 'react-bootstrap';
+import { Button, Container, } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import getStore from '../store/configureStore';
 import Wrapper from '../utils/wrapperAxios';
 import { LinkContainer } from 'react-router-bootstrap';
 import ReactMarkdown from 'react-markdown';
-import DndFile from '../components/dndFile';
-import ToolbarItem from '../components/toolbarItem';
 import CardItem from '../components/cardItem';
 import ModalItem from '../components/modalItem'
 
@@ -16,7 +14,6 @@ export default class Collection extends Component {
     constructor(props) {
         super(props);
 
-        // const idCollection = this.props.match.params.idCollection;
         const store = getStore();
 
         this.state = {
@@ -24,7 +21,7 @@ export default class Collection extends Component {
             title: '',
             description: '',
             topic: '',
-            fieldsImage: {},
+            fields: [],
             author: '',
             authorId: '',
             idCollection: this.props.match.params.idCollection,
@@ -40,25 +37,17 @@ export default class Collection extends Component {
     clearItemModel() {
         item = {
             title: '',
-            img: '',
-            fieldsItem: {
-                checkbox: {},
-                number: {},
-                string: {},
-                text: {},
-                date: {},
-            },
+            img: 'https://res.cloudinary.com/dvfmqld3v/image/upload/w_300,h_200/fotoDedault_h4wsk8',
+            fields: this.state.fields,
             tags: [],
         };
     }
 
     changeStateUpdate() {
-        //console.log("change State Update ");
         this.setState({ update: !this.state.update })
     }
 
     handleShow() {
-        //console.log('handle show')
         this.setState({
             show: !this.state.show
         });
@@ -71,17 +60,46 @@ export default class Collection extends Component {
             headerModal: 'New Item',
             typeModal: 'new'
         });
+       // console.log('state ', this.state.fields)
         this.changeStateUpdate();
         this.clearItemModel();
     }
 
 
     deleteItem(id) {
-
+        const req = {_idCollection : this.state.idCollection, idItem : id};
+        const wrapp = new Wrapper();
+        wrapp.put(`api/collections/collection/${this.state.idCollection}/delete/${id}`, req)
+            .then(res => {
+                this.changeStateUpdate();
+            })
+            .catch(err => {
+                console.log(err);
+            });
     }
 
     editItem(_id) {
-       
+        const wrapp = new Wrapper();
+        wrapp.get(`api/collections/${this.state.idCollection}/${_id}`)
+            .then(res => {
+                console.log("item ", res.data)
+                item.title = res.data.title;
+                item.topic = res.data.topic;
+                item.img = res.data.img;
+                item.fields = res.data.fields;
+                item.tags = res.data.tags;
+                item.id = res.data._id;
+                
+                this.setState({
+                    show: !this.state.show,
+                    headerModal: 'Edit Item',
+                    typeModal: 'edit',
+                    fields:  res.data.fields
+                });
+            })
+            .catch(err => {
+                console.log(err);
+            });
     }
 
     showItems() {
@@ -92,7 +110,7 @@ export default class Collection extends Component {
                     title: res.data.title,
                     description: res.data.description,
                     topic: res.data.topic,
-                    fieldsImage: res.data.fieldsImage,
+                    fields: res.data.fields,
                     author: res.data.author,
                     authorId: res.data.authorId,
                     items: res.data.items || []
@@ -149,15 +167,15 @@ export default class Collection extends Component {
                     </Container>
 
                     <Container>
-                        <div className="collectionContainer">
+                        <div className="row ">
                             Items
-                            {//console.log('items  1', this.state.items)
-                            }
                             {
                                 this.state.items.map(item => {
                                    // console.log('items  1', item)
-                                    return <div className=" card-deck col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-4" style={{ marginTop: 3 + '%' }} key={item._id}>
+                                    return <div className=" card-deck col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-4" style={{ marginTop: 3 + '%' }} key={item._id }>
                                         <CardItem
+                                            deleteItem={this.deleteItem.bind(this)}
+                                            editItem={this.editItem.bind(this)}
                                             item={item}
                                         />
                                     </div>
@@ -171,7 +189,7 @@ export default class Collection extends Component {
                                 header={this.state.headerModal}
                                 type={this.state.typeModal}
                                 item={item}
-                                fields={this.state.fieldsImage}
+                                fields={this.state.fields}
                                 topic={this.state.topic}
                                 collectionId={this.state.idCollection}
                             />

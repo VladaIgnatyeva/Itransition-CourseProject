@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Avatar from 'react-avatar-edit'
-import createCloudinary from './dndFile'
 
 export default class AvatarChoose extends Component {
     constructor(props) {

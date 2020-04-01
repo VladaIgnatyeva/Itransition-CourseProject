@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import user_img from '../assets/userDefault.png';
 import { Button, Form, Navbar, Container, Nav } from 'react-bootstrap';
 import Wrapper from '../utils/wrapperAxios';
 import { LinkContainer } from 'react-router-bootstrap'
 import AvatarChoose from '../components/avatarChoose'
-import createCloudinary from '../components/dndFile'
 import axios from 'axios';
 
 

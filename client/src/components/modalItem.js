@@ -5,21 +5,10 @@ import Wrapper from '../utils/wrapperAxios';
 import Tags from '../components/tags';
 
 
-
 const ModalItem = (props) => {
-    const { show, handleShow, header, type, item, changeStateUpdate, collectionId, fields, topic} = props;
+    const { show, handleShow, header, type, item, changeStateUpdate, fields, collectionId, topic } = props;
 
-    
     let parametrs = item;
-    //console.log('param start ', parametrs, item)
-   /* parametrs.fieldsItem = {}
-    parametrs.fieldsItem.checkbox = {}
-    parametrs.fieldsItem.number = {}
-    parametrs.fieldsItem.string = {}
-    parametrs.fieldsItem.text = {}
-    parametrs.fieldsItem.date = {}*/
-
-
 
     const saveItem = (type) => {
         let someElement = document.getElementById("textErrorModalItem");
@@ -28,25 +17,24 @@ const ModalItem = (props) => {
             if (parametrs.title === '') {
                 someElement.innerHTML = 'Fill in all the fields with *';
             } else {
-                console.log('parametrs ', parametrs);
-               // console.log('item', item)
+                //console.log('parametrs ', parametrs);
+                // console.log('item', item)
                 const newItem = {
                     _idCollection: collectionId,
                     title: parametrs.title,
                     author: localStorage.getItem('username'),
                     authorId: localStorage.getItem('id'),
                     tags: parametrs.tags,
-                    fieldsItem: parametrs.fieldsItem,
+                    fields: parametrs.fields,
                     topic: topic,
-                    img: parametrs.img 
+                    img: parametrs.img
                 }
 
                 console.log('new item', newItem);
-                
+
                 const wrapp = new Wrapper();
                 wrapp.post(`api/collections/collection/${collectionId}/item`, newItem)
                     .then(res => {
-                        //console.log('res', res.data);
                         handleShow();
                     })
                     .catch(err => {
@@ -63,14 +51,13 @@ const ModalItem = (props) => {
             }
 
             const wrapp = new Wrapper();
-            wrapp.put(`api/collections/items/${updateItem._id}`, updateItem)
+            wrapp.put(`api/collections/collection/${collectionId}/update/${parametrs.id}`, updateItem)
                 .then(res => {
                     handleShow();
                 })
                 .catch(err => {
                     someElement.innerHTML = err;
                 })
-
         }
     }
 
@@ -78,130 +65,94 @@ const ModalItem = (props) => {
         parametrs[event.target.name] = event.target.value
     }
 
-    function handleChange2(event, data) {
-        parametrs.fieldsItem[event.target.name][data] = event.target.value
-        console.log('update value parametrs',  parametrs)
-
+    function handleChange2(event, id) {
+        parametrs.fields.map(f => {
+            if(f.id === id){
+                f.value = event.target.value;
+            }
+        }); 
     }
 
     function setImg(url) {
         parametrs.img = url;
-        //console.log('url parametrs.img', parametrs.img)
     }
 
-    function getTags(tags){
+    function getTags(tags) {
         parametrs.tags = tags;
     }
 
+    function onChangeFavorite(event, id) {
+        parametrs.fields.map(f => {
+            if(f.id === id){
+                f.value = event.target.checked;
+            }
+        }); 
+    };
 
 
-    function numberFields() {
-        if (fields.number) {
-
-            //console.log('hhe', fields.number)
-            const values = Object.values(fields.number).filter(item => item != "");
-
-            let result = values.map(value => {
-                //parametrs.fieldsItem.number[value] = ''
-                return <Form.Group as={Row} key={value}>
-                    <Form.Label column sm="2">{value}</Form.Label>
+    function fieldsItem(field) {
+       //console.log('field.value', field.value)
+        switch (field.type) {
+            case 'Number':
+                return <Form.Group as={Row} key={field.id}>
+                    <Form.Label column sm="2">{field.name}</Form.Label>
                     <Col sm="8">
                         <Form.Control
                             type="number"
-                            name="number"
-                            onChange={(e) => handleChange2(e, value)}
+                            name="Number"
+                            onChange={(e) => handleChange2(e, field.id)}
+                            defaultValue={field.value}
                         />
                     </Col>
                 </Form.Group>
-            })
-            return result;
-        }
-    }
-
-    function onChangeFavorite(event, data) {
-        parametrs.fieldsItem.checkbox[event.target.name] = event.target.checked;
-        //console.log("param ", parametrs)
-
-    };
-
-    function checkboxFields() {
-        if (fields.checkbox) {
-            const values = Object.values(fields.checkbox).filter(item => item != "");
-
-            let result = values.map(value => {
-                parametrs.fieldsItem.checkbox[value] = false;
-                return <Form.Group key={value} >
-                    <Form.Check type="checkbox" label={value} name={value} onChange={e => onChangeFavorite(e, 'checkbox')}
-                        defaultChecked={false} />
-                </Form.Group >
-            })
-            return result;
-        }
-    }
-
-    function stringFields() {
-        if (fields.string) {
-            const values = Object.values(fields.string).filter(item => item != "");
-
-            let result = values.map(value => {
-                //parametrs.fieldsItem.string[value] = ''
-                return <Form.Group as={Row} key={value}>
-                    <Form.Label column sm="2">{value}</Form.Label>
+                break;
+            case 'String':
+                return <Form.Group as={Row} key={field.id}>
+                    <Form.Label column sm="2">{field.name}</Form.Label>
                     <Col sm="8">
                         <Form.Control
                             type="text"
-                            name='string'
-                            onChange={(e) => handleChange2(e, value)}
+                            name='String'
+                            onChange={(e) => handleChange2(e, field.id)}
+                            defaultValue={field.value}
                         />
                     </Col>
                 </Form.Group>
-            })
-            return result;
-        }
-    }
-
-    function textFields() {
-        if (fields.text) {
-            const values = Object.values(fields.text).filter(item => item != "");
-
-            let result = values.map(value => {
-               // parametrs.fieldsItem.text[value] = ''
-                return <Form.Group as={Row} key={value}>
-                    <Form.Label column sm="2">{value}</Form.Label>
+                break;
+            case 'Text':
+                return <Form.Group as={Row} key={field.id }>
+                    <Form.Label column sm="2">{field.name}</Form.Label>
                     <Col sm="8">
                         <Form.Control
                             as="textarea"
                             rows="2"
-                            name='text'
-                            onChange={(e) => handleChange2(e, value)}
+                            name='Text'
+                            onChange={(e) => handleChange2(e, field.id)}
+                            defaultValue={field.value}
                         />
                     </Col>
                 </Form.Group>
-            })
-            return result;
-        }
-    }
-
-    function dateFields() {
-        if (fields.date) {
-            const values = Object.values(fields.date).filter(item => item != "");
-
-            let result = values.map(value => {
-                //parametrs.fieldsItem.date[value] = ''
-                return <Form.Group as={Row} key={value}>
-                    <Form.Label column sm="2">{value}</Form.Label>
+                break;
+            case 'Checkbox':
+                return <Form.Group key={field.id} >
+                    <Form.Check type="checkbox" label={field.name} name={field.name} onChange={e => onChangeFavorite(e, field.id)}
+                        defaultChecked={field.value} />
+                </Form.Group >
+                break;
+            case 'Date':
+                return <Form.Group as={Row} key={field.id}>
+                    <Form.Label column sm="2">{field.name}</Form.Label>
                     <Col sm="8">
                         <Form.Control
                             type="date"
                             rows="3"
-                            name='date'
-                            onChange={(e) => handleChange2(e, value)}
-                        //defaultValue={parametrs.description}
+                            name='Date'
+                            onChange={(e) => handleChange2(e, field.id)}
+                            defaultValue={field.value}
                         />
                     </Col>
                 </Form.Group>
-            })
-            return result;
+                break;
         }
     }
 
@@ -216,7 +167,7 @@ const ModalItem = (props) => {
                     <Container>
                         <Form.Group >
                             <Form.Label>Image: </Form.Label>
-                            <DndFile setCover={setImg}/>
+                            <DndFile setCover={setImg} />
                         </Form.Group>
                         <Form.Group >
                             <Form.Label>Item title:*</Form.Label>
@@ -230,17 +181,16 @@ const ModalItem = (props) => {
                         </Form.Group>
                         <Form.Group controlId="exampleForm.ControlTextarea1">
                             <Form.Label>Tags:*</Form.Label>
-                            <Tags getTags={getTags} />
+                            <Tags getTags={getTags} defaultTags={parametrs.tags}/>
                         </Form.Group>
 
                         <Form.Group >
                             <Form.Label>Item fields</Form.Label>
-                            {checkboxFields()}
-                            {numberFields()}
-                            {stringFields()}
-                            {textFields()}
-                            {dateFields()}
-                            
+                            {fields.map((field) => {
+                                return fieldsItem(field);
+                            })}
+
+
                         </Form.Group>
                     </Container>
                 </Modal.Body>

@@ -269,17 +269,20 @@ div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
 
 .tagFooter {
   display: inline;
+  margin-right: 3px;
 }
 
 .fieldsList{
   display: flex;
   flex-direction: row;
-  
-  
 }
 
 .buttonX{
   transform: scale(0.75);
   background: #9ea7ad;
   margin-left: 2px;
+}
+
+.cardItemFields{
+  margin-right: 4px;
 }

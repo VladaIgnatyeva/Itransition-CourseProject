@@ -5,7 +5,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import configureStore from "./store/configureStore";
 import { BrowserRouter as Router } from 'react-router-dom'
-import { Provider } from 'react-redux'
+
 
 const store = configureStore()
 

@@ -29,8 +29,8 @@ router.get('/:id', function (req, res) {
         fields: 1,
         author: 1,
         authorId: 1,
-        items: [], 
-        
+        items: [],
+
     })
         .then(data => { res.json(data) })
         .catch(err => res.status(400).send(err));
@@ -57,8 +57,8 @@ router.put('/:id', function (req, res) {
             cover: req.body.cover,
             fields: req.body.fields
         }
-    }, 
-    { useFindAndModify: false })
+    },
+        { useFindAndModify: false })
         .then(data => res.json(data))
         .catch(err => res.status(400).send(err));
 });
@@ -128,42 +128,58 @@ router.post('/collection/:id/item', function (req, res) {
         .then(data => res.json(data))
         .catch(err => res.status(400).send(err));
 
-    /*item.save(function (err) {
-        if (!err) {
-            log.info(`User ${item.author} created item with id: ${item.itemId}`);
-            return res.json(item);
-        } else {
-            if (err.name === 'ValidationError') {
-                res.statusCode = 400;
-                res.json({
-                    error: 'Validation error'
-                });
-            } else {
-                res.statusCode = 500;
-
-                log.error(`Internal error(${res.statusCode}): ${err.message}`);
-
-                res.json({
-                    error: 'Server error'
-                });
-            }
-        }
-    });*/
 });
 
-router.put('/items/:itemId', function (req, res) {
-    Item.updateOne({ _id: req.body._id }, {
-        $set: {
-            title: req.body.title,
-            img: req.body.img,
-            fields: req.body.fields,
-
-        }
-    })
+router.put('/collection/:id/delete/:itemId', function (req, res) {
+    log.info(`Delete item with id: ${req.body.idItem} from collection with id ${req.body._idCollection}`);
+    Collection.updateOne({ _id: req.body._idCollection }, {
+        $pull: { items: { _id: req.body.idItem } }
+    },
+        { safe: true },
+    )
         .then(data => res.json(data))
         .catch(err => res.status(400).send(err));
 });
 
+router.put('/collection/:id/update/:itemId', function (req, res) {   
+    Collection.updateOne({ _id: req.params.id, 'items._id' : req.params.itemId }, {
+        $set: { 
+            "items.$.title": req.body.title,
+            "items.$.tags": req.body.tags,
+            "items.$.img": req.body.img,
+            "items.$.fields": req.body.fields
+        }
+    })
+        .then(data => {
+            log.info(`Update item with id: ${req.params.idItem} from collection with id ${req.params.id}`);
+            res.json(data)
+        })
+        .catch(err => res.status(400).send(err));
+});
+
+router.get('/:idCollection/:idItem', function (req, res) {
+    //console.log("id ", req.params)
+    Collection.findOne({ _id: req.params.idCollection}, {
+        items: []
+    })
+        .then(data => {
+            const result = data.items.filter(i => i._id == req.params.idItem);
+            //console.log("result", result)
+            res.json(result[0])
+               /* title: 1,
+                topic: 1,
+                img: '',
+                fields: [],
+                tags: []
+            
+                .then(data2 => {
+                    console.log("data2", data2);
+                    res.json(data2);
+                })
+                ;*/
+        })
+        .catch(err => res.status(400).send(err));
+});
 module.exports = router;
 
 

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Modal, Button, Card, Container, Image, Form, Tab, Nav, Col, Row } from "react-bootstrap";
+import { Form} from "react-bootstrap";
 
 let inputFieldsName = React.createRef();
 let inputFieldsType = React.createRef();

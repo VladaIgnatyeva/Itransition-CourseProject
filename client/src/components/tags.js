@@ -1,12 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { WithContext as ReactTags } from 'react-tag-input';
 import Wrapper from '../utils/wrapperAxios';
-
-const KeyCodes = {
-    comma: 188,
-    enter: 13,
-};
 
 
 export default class Tags extends React.Component {
@@ -34,7 +28,7 @@ export default class Tags extends React.Component {
         //console.log("tags", this.state.tags)
         //console.log("tag", tag)
         
-        if (this.state.suggestions.findIndex(item => item.id == tag.id) === -1) {
+        if (this.state.suggestions.findIndex(item => item.id === tag.id) === -1) {
             //console.log('new tag', tag);
             const wrapp = new Wrapper();
             wrapp.post(`api/tags`, tag)
@@ -54,9 +48,11 @@ export default class Tags extends React.Component {
         wrapp.get(`api/tags`)
             .then(res => {
                 this.setState({
-                    suggestions: res.data
+                    suggestions: res.data,
+                    tags : this.props.defaultTags[0]
+
                 });
-                // console.log("collection ", res.data)
+                //console.log("tags ", this.props.defaultTags[0])
             })
             .catch(err => {
                 console.log(err);

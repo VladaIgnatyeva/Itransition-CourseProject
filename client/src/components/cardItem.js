@@ -12,11 +12,16 @@ class CardItem extends Component {
         this.state = {
             item: props.item,
         }
-
-       //console.log("item ", this.state.item)
+        //console.log("item ", this.state.item)
     }
 
+    deleteItem() {
+        this.props.deleteItem(this.state.item._id);
+    }
 
+    editItem() {
+        this.props.editItem(this.state.item._id);
+    }
 
     render() {
         const linkImage = `/collection/${this.state.item._id}`
@@ -24,38 +29,65 @@ class CardItem extends Component {
             <Card >
                 <div className="cardImg ">
                     <div className="cardTool">
-                        <button type="button" className="btn btn-outline-light " id="btnEdit" >
+                        <button type="button" className="btn btn-outline-light " id="btnEdit" onClick={this.editItem.bind(this)}>
                             <span className="oi oi-pencil" title="icon pencil" aria-hidden="true"></span>
                         </button>
-                        <button type="button" className="btn btn-outline-light" id="btnDelete" >
+                        <button type="button" className="btn btn-outline-light" id="btnDelete" onClick={this.deleteItem.bind(this)}>
                             <span className="oi oi-trash " title="icon trash" aria-hidden="true"> </span>
                         </button>
                     </div>
                     <Card.Img variant="top" src={this.state.item.img} className="cardImg" />
                 </div>
 
-                <Card.Body>
-                    <Card.Title>{this.state.item.title}</Card.Title>
-                    <Card.Subtitle className="mb-2 text-muted">{this.state.item.topic}</Card.Subtitle>
-                    <div>
-                        <ReactMarkdown source={this.state.item.description} escapeHtml={false} />{' '}
-                        {//this.state.item.fieldsItem.number.map(date => {
-                           // console.log(date)
-                        }
-                    </div>
-                    <LinkContainer to={linkImage}>
-                        <a className="stretched-link">Go </a>
-                    </LinkContainer>
-                </Card.Body>
-                <Card.Footer>
-                    {
-                        this.state.item.tags.map(tag => {       
-                            return <div className="tagFooter" key={tag._id+'1'}>
-                                <small className="text-muted "> {tag.text} </small>
+                <div className="media position-relative">
+                    <div className="media-body">
+                        <Card.Body>
+                            <Card.Title>{this.state.item.title}</Card.Title>
+                            <Card.Subtitle className="mb-2 text-muted">{this.state.item.topic}</Card.Subtitle>
+                            <div>
+                                <ReactMarkdown source={this.state.item.description} escapeHtml={false} />{' '}
+                                {this.state.item.fields.map(data => {
+
+                                    if (data.type === 'Checkbox') {
+                                        let b = 'false';
+                                        if (data.value) {
+                                            b = 'true'
+                                        }
+                                        return (
+                                            <div key={data.id + new Date().getMilliseconds()} className="d-flex flex-row">
+                                                <p className="cardItemFields">
+                                                    <b>{data.name}:</b>  {b}
+                                                </p>
+                                            </div>
+                                        )
+                                    } else {
+                                        return (
+                                            <div key={data.id + new Date().getMilliseconds()} className="d-flex flex-row">
+                                                <p className="cardItemFields">
+                                                    <b>{data.name}:</b>
+                                                </p>
+                                                <ReactMarkdown source={data.value} escapeHtml={false} />
+                                            </div>
+                                        )
+                                    }
+                                })
+                                }
                             </div>
-                        })
-                    }
-                </Card.Footer>
+                            <LinkContainer to={linkImage}>
+                                <a className="stretched-link"> </a>
+                            </LinkContainer>
+                        </Card.Body>
+                        <Card.Footer>
+                            {
+                                this.state.item.tags.map(tag => {
+                                    return <div className="tagFooter" key={tag[0]._id + new Date().getMilliseconds()}>
+                                        <small className="text-muted "> {tag[0].text} </small>
+                                    </div>
+                                })
+                            }
+                        </Card.Footer>
+                    </div>
+                </div>
             </Card >
         )
     }

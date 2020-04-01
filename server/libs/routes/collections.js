@@ -12,7 +12,8 @@ router.get('/', function (req, res) {
     const result = Collection.find({}, {
         title: 1,
         description: 1,
-        topic: 1
+        topic: 1,
+        author :''
     });
 
     result.then(data => res.json(data))

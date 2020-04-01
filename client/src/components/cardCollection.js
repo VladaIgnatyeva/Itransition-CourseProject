@@ -40,8 +40,8 @@ class CardCollection extends Component {
     }
 
     showCardTool() {
-        
-        if (this.state.item.authorId === localStorage.getItem('id') || localStorage.getItem('role') === 'admin') {
+        //console.log('item state', this.state.item)
+        if (this.props.nameAuthor === localStorage.getItem('username') || localStorage.getItem('role') === 'admin') {
             return <div className='media position-relative'>
                 {this.getCardBody()}
             </div>

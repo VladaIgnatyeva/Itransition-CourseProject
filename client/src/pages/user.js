@@ -98,6 +98,7 @@ export default class User extends Component {
                 collection.cover = res.data.cover;
                 collection.fields = res.data.fields;
                 collection.id = _id;
+                collection.author = res.data.author;
                 //console.log("collection ", collection)
                 this.setState({
                     show: !this.state.show,
@@ -226,6 +227,7 @@ export default class User extends Component {
                                 this.state.collections.map(item => {
                                     return <div className=" card-deck col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-4" style={{ marginTop: 3 + '%' }} key={item._id}>
                                         <CardCollection
+                                            nameAuthor={this.state.username}
                                             item={item}
                                             deleteCollection={this.deleteCollection.bind(this)}
                                             editCollection={this.editCollection.bind(this)}

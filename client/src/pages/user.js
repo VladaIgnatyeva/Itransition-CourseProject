@@ -148,8 +148,9 @@ export default class User extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
+        //id = this.props.location.pathname.substr(6);
         if (this.state.update !== prevState.update) {
-            this.showCollections();
+            this.showCollections(id);
         }
     }
 

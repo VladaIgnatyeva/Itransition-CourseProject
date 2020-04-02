@@ -14,7 +14,7 @@ class ModalImage extends Component {
         return (
             <Modal show={props.show} onHide={props.handleShow} aria-labelledby="contained-modal-title-vcenter" centered>
                 <Modal.Header closeButton>
-                    <Image src={props.img} />
+                    <Image src={props.item.img} />
                 </Modal.Header>
                 <Modal.Body>
                     <Container>

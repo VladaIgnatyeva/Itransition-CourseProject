@@ -1,8 +1,6 @@
 {
     "PORT": 8080,
-    "mongoose": {
-        "uri": "mongodb://localhost/collections"
-    },
+    "mongooseUri": "mongodb://localhost/collections",
     "security": {
         "tokenLife": 3600
     },

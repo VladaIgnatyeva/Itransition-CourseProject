@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const log = require('../log')(module);
 const config = require('../config');
 
+console.log("connect ", config.get('mongoose:uri'))
 mongoose.connect(config.get('mongoose:uri'), { useCreateIndex: true, useUnifiedTopology: true, useNewUrlParser: true });
 var db = mongoose.connection;
 

@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const passport = require('passport');
 const log = require('../log');
+const config = require('../config');
 
 router.get('/login/facebook', passport.authenticate('facebook', { scope: 'email', session: false }));
 
@@ -17,7 +18,7 @@ router.get('/login/facebook/callback', (req, res, next) =>
         if (user) {
             const params = user.toAuthJSON();
 
-            return res.redirect(`http://localhost:3000/user?id=${params.id}&username=${params.username}&token=${params.token}`);
+            return res.redirect(`${config.get("hostClient")}/user?id=${params.id}&username=${params.username}&token=${params.token}`);
         }
 
         return res.status(400);

@@ -2,7 +2,7 @@
   "name": "site",
   "version": "0.1.0",  
   "scripts": {
-    "start": "cd server && npm run serve",
+    "start": "cd server && npm run serve:prod",
     "build": "cd client && npm install && npm run build && cd ../server && npm install"
   },
   "engines": {

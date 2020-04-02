@@ -121,7 +121,7 @@ export default class UserSettings extends Component {
                             localStorage.setItem("username", this.state.username);
                             localStorage.setItem('avatar', this.state.avatar);
 
-                            this.props.history.push("/user");
+                            this.props.history.push(`/user/${localStorage.getItem('id')}`);
                         })
                         .catch(err => {
                             someElement.innerHTML = err;

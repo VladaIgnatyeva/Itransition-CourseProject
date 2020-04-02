@@ -20,28 +20,22 @@ export default class Tags extends React.Component {
         this.setState({
             tags: tags.filter((tag, index) => index !== i),
         });
-    
+
     }
 
     handleAddition(tag) {
-        console.log("tags", this.state.tags);
-        console.log("tag", tag);
-        //this.setState({ tags:[...state.tags, tag]});
         this.setState(state => ({ tags: [...state.tags, tag] }));
-        console.log("tags after", this.state.tags);
-        //console.log("tag", tag)
-        
+
         if (this.state.suggestions.findIndex(item => item.id === tag.id) === -1) {
-            //console.log('new tag', tag);
             const wrapp = new Wrapper();
             wrapp.post(`api/tags`, tag)
                 .then(res => {
-                    
+
                 })
                 .catch(err => {
                     console.log(err);
                 });
-            
+
         }
     }
 
@@ -52,10 +46,9 @@ export default class Tags extends React.Component {
             .then(res => {
                 this.setState({
                     suggestions: res.data,
-                    tags : this.props.defaultTags
+                    tags: this.props.defaultTags
 
                 });
-                console.log("componentDidMount tags ", this.props.defaultTags)
             })
             .catch(err => {
                 console.log(err);
@@ -63,7 +56,6 @@ export default class Tags extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        //console.log("componentDidUpdate");
         if (this.state.tags !== prevState.tags) {
             this.props.getTags(this.state.tags);
         }

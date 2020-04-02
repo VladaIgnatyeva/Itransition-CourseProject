@@ -14,12 +14,12 @@ const users = require('./libs/routes/users');
 const oauth = require('./libs/routes/oauth');
 const tags = require('./libs/routes/tags');
 const collections = require('./libs/routes/collections');
-
+const db = require('./libs/mongoose/mongoose');
 const app = express();
+const auth = require('./libs/auth/auth2');
 
 app.use(bodyParser.json());
 app.use(cors());
-app.use(express.static(path.join(__dirname, '../client/build')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
 
@@ -27,6 +27,8 @@ app.use('/api', oauth);
 app.use('/api/users', users);
 app.use('/api/collections', collections);
 app.use('/api/tags', tags);
+
+app.use(express.static(path.join(__dirname, '../client/build')));
 
 app.get('*', (req,res) =>{
     res.sendFile(path.join(__dirname, '../client/build/index.html'));

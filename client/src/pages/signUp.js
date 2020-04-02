@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Wrapper from '../utils/wrapperAxios';
 import fb_img from '../assets/fb.png';
 import tw_img from '../assets/tw.png';
+const api = process.env.REACT_APP_API_URL
 
 export default class SignUp extends Component {
     constructor(props) {
@@ -72,6 +73,7 @@ export default class SignUp extends Component {
     }
 
     render() {
+        const href = `${api}/api/signup/facebook`
         return (
             <>
                 <div className="bgSign">
@@ -84,7 +86,7 @@ export default class SignUp extends Component {
                                 <Form.Group>
                                     <div className="fb-login-button" data-width="" data-size="large" data-button-type="login_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false"></div>
 
-                                    <a href="http://localhost:8080/api/signup/facebook">
+                                    <a href={href}>
                                         <Button variant="primary" type="button" id="facebook" block  style={{marginBottom: 8 + 'px'}}>
                                             <img src={fb_img} alt="icon_fb" height="30" />
                                             Sign up with Facebook

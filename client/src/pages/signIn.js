@@ -6,6 +6,7 @@ import tw_img from '../assets/tw.png';
 import Wrapper from '../utils/wrapperAxios';
 import getStore from '../store/configureStore';
 import { loggedIn, toggleTheme, toggleLanguage } from '../action/index';
+const api = process.env.REACT_APP_API_URL
 
 
 export default class SignIn extends Component {
@@ -19,6 +20,8 @@ export default class SignIn extends Component {
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+
+        //console.log('env ', process.env.REACT_APP_API_URL)
     }
 
     handleChange = event => {
@@ -64,6 +67,8 @@ export default class SignIn extends Component {
     }
 
     render() {
+        const href = `${api}/api/signup/facebook`
+        console.log('href face', href)
         return (
             <>
                 <div className="bgSign">
@@ -74,7 +79,7 @@ export default class SignIn extends Component {
                                 <Form.Text id="textErrorSignin" name="error" onChange={this.handleChange}></Form.Text>
 
                                 <Form.Group>
-                                    <a href="http://localhost:8080/api/signup/facebook">
+                                    <a href={href}>
                                         <Button variant="primary" type="button" id="facebook" block style={{ marginBottom: 8 + 'px' }}>
                                             <img src={fb_img} alt="icon_fb" height="30" />
                                             Sign in with Facebook

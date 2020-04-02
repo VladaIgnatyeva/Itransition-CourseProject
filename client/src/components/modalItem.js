@@ -156,6 +156,7 @@ const ModalItem = (props) => {
         }
     }
 
+    console.log('params ', parametrs)
     return (
         <>
             <Modal show={show} onHide={handleShow} aria-labelledby="contained-modal-title-vcenter" centered>

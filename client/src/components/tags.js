@@ -52,10 +52,10 @@ export default class Tags extends React.Component {
             .then(res => {
                 this.setState({
                     suggestions: res.data,
-                    tags : this.props.defaultTags[0]
+                    tags : this.props.defaultTags
 
                 });
-                console.log("componentDidMount tags ", this.props.defaultTags[0])
+                console.log("componentDidMount tags ", this.props.defaultTags)
             })
             .catch(err => {
                 console.log(err);
@@ -63,7 +63,7 @@ export default class Tags extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        console.log("componentDidUpdate");
+        //console.log("componentDidUpdate");
         if (this.state.tags !== prevState.tags) {
             this.props.getTags(this.state.tags);
         }

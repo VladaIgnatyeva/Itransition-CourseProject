@@ -30,7 +30,7 @@ const ModalItem = (props) => {
                     img: parametrs.img
                 }
 
-                console.log('new item', newItem);
+                //console.log('new item', newItem);
 
                 const wrapp = new Wrapper();
                 wrapp.post(`api/collections/collection/${collectionId}/item`, newItem)

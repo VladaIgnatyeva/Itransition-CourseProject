@@ -27,7 +27,7 @@ const NewCollectionModal = (props) => {
                     topic: parametrs.topic,
                     cover: parametrs.cover
                 }
-                console.log("newCollection ", newCollection);
+                //console.log("newCollection ", newCollection);
                 const wrapp = new Wrapper();
                 wrapp.post('api/collections/collection', newCollection)
                     .then(res => {
@@ -68,7 +68,7 @@ const NewCollectionModal = (props) => {
     }
 
     function updateFields(fields) {
-        console.log('field add', fields)
+        //console.log('field add', fields)
         parametrs.fields = fields;
     }
 

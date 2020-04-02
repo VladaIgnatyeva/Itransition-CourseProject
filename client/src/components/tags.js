@@ -24,7 +24,8 @@ export default class Tags extends React.Component {
     }
 
     handleAddition(tag) {
-        this.setState(state => ({ tags: [...state.tags, tag] }));
+        this.setState({ tags:[...state.tags, tag]});
+        //this.setState(state => ({ tags: [...state.tags, tag] }));
         //console.log("tags", this.state.tags)
         //console.log("tag", tag)
         

@@ -37,7 +37,8 @@ export default class User extends Component {
             show: false,
             headerModal: '',
             typeModal: '',
-            avatar: ''
+            avatar: '',
+            authorId : ''
         }
     }
 
@@ -48,7 +49,9 @@ export default class User extends Component {
             topic: 'Books',
             fields: [],
             cover: 'https://res.cloudinary.com/dvfmqld3v/image/upload/w_300,h_200/logoDefault_chafgb',
-            id: ''
+            id: '',
+            author: this.state.username,
+            authorId : this.state.authorId
         };
     }
 
@@ -76,9 +79,9 @@ export default class User extends Component {
     }
 
 
-    deleteCollection(id) {
+    deleteCollection(_id) {
         const wrapp = new Wrapper();
-        wrapp.delete(`api/collections/${id}`, id)
+        wrapp.delete(`api/collections/${_id}`, _id)
             .then(res => {
                 this.changeStateUpdate();
             })
@@ -99,7 +102,8 @@ export default class User extends Component {
                 collection.fields = res.data.fields;
                 collection.id = _id;
                 collection.author = res.data.author;
-                //console.log("collection ", collection)
+                collection.authorId = res.data.authorId;
+                
                 this.setState({
                     show: !this.state.show,
                     headerModal: 'Edit Collection',
@@ -124,16 +128,15 @@ export default class User extends Component {
     }
 
     getUser(id) {
-
         //console.log('this', id)
-
         const wrapp = new Wrapper();
         wrapp.get(`api/users/user/${id}`)
             .then(res => {
                 //console.log("response ", res.data);
                 this.setState({
                     username: res.data.username,
-                    avatar: res.data.avatar
+                    avatar: res.data.avatar,
+                    authorId : id
                 })
             })
             .catch(err => {

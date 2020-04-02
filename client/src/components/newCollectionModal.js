@@ -12,7 +12,7 @@ const NewCollectionModal = (props) => {
 
     const saveCollection = (type) => {
         let someElement = document.getElementById("textErrorModal");
-
+        
         if (type === "new") {
             if (parametrs.title === '' || parametrs.description === '') {
                 someElement.innerHTML = 'Fill in all the fields with *';
@@ -20,8 +20,8 @@ const NewCollectionModal = (props) => {
                 //console.log("paramentrs ", parametrs);
                 const newCollection = {
                     title: parametrs.title,
-                    author: localStorage.getItem('username'),
-                    authorId: localStorage.getItem('id'),
+                    author: parametrs.author,
+                    authorId: parametrs.authorId,
                     description: parametrs.description,
                     fields: parametrs.fields,
                     topic: parametrs.topic,
@@ -76,8 +76,9 @@ const NewCollectionModal = (props) => {
         parametrs.cover = url;
     }
 
-
+    console.log("paramentrs ", parametrs);
     return (
+        
         <>
             <Modal show={show} onHide={handleShow} aria-labelledby="contained-modal-title-vcenter" centered>
                 <Modal.Header closeButton>

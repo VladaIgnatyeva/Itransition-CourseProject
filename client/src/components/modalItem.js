@@ -23,8 +23,6 @@ const ModalItem = (props) => {
                     title: parametrs.title,
                     author: parametrs.author,
                     authorId: parametrs.authorId,
-                    //author: localStorage.getItem('username'),
-                    //authorId: localStorage.getItem('id'),
                     tags: parametrs.tags,
                     fields: parametrs.fields,
                     topic: topic,

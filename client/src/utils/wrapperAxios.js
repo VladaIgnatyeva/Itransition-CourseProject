@@ -19,8 +19,8 @@ export default class WrapperAxios {
     }
 
     delete(url, data) {
-        //return axios.delete(`http://localhost:8080/${url}`, {data : {data},  headers: { Authorization: 'Bearer ' + localStorage.getItem('token') } });
-        return axios.get(`${api}/${url}`,  { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') } })
+        return axios.delete(`${api}/${url}`, {data : {data},  headers: { Authorization: 'Bearer ' + localStorage.getItem('token') } });
+        //return axios.get(`${api}/${url}`,  { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') } })
     }
 
 }

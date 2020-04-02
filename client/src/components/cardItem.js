@@ -61,15 +61,7 @@ class CardItem extends Component {
                     <a className="stretched-link"> </a>
                 </LinkContainer>
             </Card.Body>
-            <Card.Footer>
-                {
-                    this.state.item.tags.map(tag => {
-                        return <div className="tagFooter" key={tag[0]._id + new Date().getMilliseconds()}>
-                            <small className="text-muted "> {tag[0].text} </small>
-                        </div>
-                    })
-                }
-            </Card.Footer>
+
         </div>
     }
 
@@ -86,7 +78,7 @@ class CardItem extends Component {
     }
 
     render() {
-
+        const linkAuthor = `/user/${this.state.item.authorId}`;
         return (
             <Card >
                 <div className="cardImg ">
@@ -102,7 +94,30 @@ class CardItem extends Component {
                 </div>
 
                 {this.showCardTool()}
+                <Card.Footer>
+                    <div>
+                        <div className="row">
+                            <div className="col col-lg-8">
+                                {
+                                    this.state.item.tags.map(tag => {
+                                        return <div className="tagFooter" key={tag._id + new Date().getMilliseconds()}>
+                                            <span className="badge badge-secondary">{tag.text}</span>
+                                        </div>
+                                    })
+                                }
+                            </div>
+                            <div className="col col-lg-4">
+                                <div className="linkFooter">
+                                    by  <LinkContainer to={linkAuthor} >
+                                        <a> {this.state.item.author}</a>
+                                    </LinkContainer>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
+
+                </Card.Footer>
             </Card >
         )
     }

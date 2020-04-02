@@ -15,7 +15,7 @@ const Item = new Schema({
         type: String,
         required: true
     },
-    tags: [Array],
+    tags: [Object],
     fields: {
         type: Array,
         required: false

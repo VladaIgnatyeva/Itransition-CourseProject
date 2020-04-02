@@ -26,6 +26,7 @@ export default class Tags extends React.Component {
     handleAddition(tag) {
         this.setState(state => ({ tags: [...state.tags, tag] }));
 
+        //console.log("new tag", tag)
         if (this.state.suggestions.findIndex(item => item.id === tag.id) === -1) {
             const wrapp = new Wrapper();
             wrapp.post(`api/tags`, tag)
@@ -41,13 +42,13 @@ export default class Tags extends React.Component {
 
 
     componentDidMount() {
+        console.log("tags props", this.props.defaultTags)
         const wrapp = new Wrapper();
         wrapp.get(`api/tags`)
             .then(res => {
                 this.setState({
                     suggestions: res.data,
                     tags: this.props.defaultTags
-
                 });
             })
             .catch(err => {

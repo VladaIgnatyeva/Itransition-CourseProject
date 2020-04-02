@@ -40,6 +40,8 @@ export default class Collection extends Component {
             img: 'https://res.cloudinary.com/dvfmqld3v/image/upload/w_300,h_200/fotoDedault_h4wsk8',
             fields: this.state.fields,
             tags: [],
+            author: this.state.author,
+            authorId: this.state.authorId
         };
     }
 
@@ -144,7 +146,7 @@ export default class Collection extends Component {
                         <div className="d-flex flex-column align-items-center justify-content-center">
                             <h1>{this.state.title}</h1>
                             <p className="text-muted">{this.state.items.length} photos collected by
-                                    <LinkContainer to={linkAuthor}>
+                                <LinkContainer to={linkAuthor}>
                                     <a> {this.state.author}</a>
                                 </LinkContainer>
                             </p>

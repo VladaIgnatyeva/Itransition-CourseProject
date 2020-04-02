@@ -17,20 +17,19 @@ const ModalItem = (props) => {
             if (parametrs.title === '') {
                 someElement.innerHTML = 'Fill in all the fields with *';
             } else {
-                //console.log('parametrs ', parametrs);
-                // console.log('item', item)
+                //console.log("parametrs all", parametrs)
                 const newItem = {
                     _idCollection: collectionId,
                     title: parametrs.title,
-                    author: localStorage.getItem('username'),
-                    authorId: localStorage.getItem('id'),
+                    author: parametrs.author,
+                    authorId: parametrs.authorId,
+                    //author: localStorage.getItem('username'),
+                    //authorId: localStorage.getItem('id'),
                     tags: parametrs.tags,
                     fields: parametrs.fields,
                     topic: topic,
                     img: parametrs.img
                 }
-
-                //console.log('new item', newItem);
 
                 const wrapp = new Wrapper();
                 wrapp.post(`api/collections/collection/${collectionId}/item`, newItem)
@@ -156,7 +155,7 @@ const ModalItem = (props) => {
         }
     }
 
-    console.log('params ', parametrs)
+    //console.log('params ', parametrs)
     return (
         <>
             <Modal show={show} onHide={handleShow} aria-labelledby="contained-modal-title-vcenter" centered>

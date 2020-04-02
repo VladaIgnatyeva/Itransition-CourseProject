@@ -286,3 +286,8 @@ div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
 .cardItemFields{
   margin-right: 4px;
 }
+
+.linkFooter a{
+  color: #666;
+  
+}

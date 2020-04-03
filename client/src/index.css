@@ -289,5 +289,13 @@ div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
 
 .linkFooter a{
   color: #666;
-  
+}
+
+.itemsTool{
+  margin-right: 15px;
+}
+
+.checkboxCollection {
+  display: flex;
+  margin-right: 15px;
 }

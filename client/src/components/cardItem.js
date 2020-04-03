@@ -97,7 +97,7 @@ class CardItem extends Component {
                 <Card.Footer>
                     <div>
                         <div className="row">
-                            <div className="col col-lg-8">
+                            <div className="col col-lg-8 col-sm-8 col-md-8 col-xl-6">
                                 {
                                     this.state.item.tags.map(tag => {
                                         return <div className="tagFooter" key={tag._id + new Date().getMilliseconds()}>
@@ -106,7 +106,7 @@ class CardItem extends Component {
                                     })
                                 }
                             </div>
-                            <div className="col col-lg-4">
+                            <div className="col col-lg-4 col-sm-4 col-md-4 col-xl-6">
                                 <div className="linkFooter">
                                     by  <LinkContainer to={linkAuthor} >
                                         <a> {this.state.item.author}</a>

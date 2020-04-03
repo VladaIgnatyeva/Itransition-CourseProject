@@ -55,6 +55,14 @@ class CardCollection extends Component {
 
     }
 
+    getCover() {
+        if (this.state.item.cover === '') {
+            return 'https://res.cloudinary.com/dvfmqld3v/image/upload/w_300,h_200/logoDefault_chafgb'
+        } else {
+            return this.state.item.cover;
+        }
+    }
+
     render() {
 
         return (
@@ -69,7 +77,7 @@ class CardCollection extends Component {
                             <span className="oi oi-trash " title="icon trash" aria-hidden="true"> </span>
                         </button>
                     </div>
-                    <Card.Img variant="top" src={this.state.item.cover} className="cardImg" />
+                    <Card.Img variant="top" src={this.getCover()} className="cardImg" />
                 </div>
 
                 {this.showCardTool()}

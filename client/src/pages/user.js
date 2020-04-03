@@ -48,7 +48,7 @@ export default class User extends Component {
             description: '',
             topic: 'Books',
             fields: [],
-            cover: 'https://res.cloudinary.com/dvfmqld3v/image/upload/w_300,h_200/logoDefault_chafgb',
+            cover: '',
             id: '',
             author: this.state.username,
             authorId : this.state.authorId

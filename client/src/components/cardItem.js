@@ -77,6 +77,15 @@ class CardItem extends Component {
         </div>
     }
 
+
+    getImage(){
+        if(this.state.item.img === ''){
+            return 'https://res.cloudinary.com/dvfmqld3v/image/upload/w_300,h_200/fotoDedault_h4wsk8'
+        } else {
+            return this.state.item.img;
+        } 
+    }
+
     render() {
         const linkAuthor = `/user/${this.state.item.authorId}`;
         return (
@@ -90,7 +99,7 @@ class CardItem extends Component {
                             <span className="oi oi-trash " title="icon trash" aria-hidden="true"> </span>
                         </button>
                     </div>
-                    <Card.Img variant="top" src={this.state.item.img} className="cardImg" />
+                    <Card.Img variant="top" src={this.getImage()} className="cardImg" />
                 </div>
 
                 {this.showCardTool()}

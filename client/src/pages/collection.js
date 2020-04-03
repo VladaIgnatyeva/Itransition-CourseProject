@@ -15,10 +15,9 @@ export default class Collection extends Component {
     constructor(props) {
         super(props);
 
-        const store = getStore();
-
         this.state = {
             items: [],
+            initialItems: [],
             title: '',
             description: '',
             topic: '',
@@ -32,7 +31,7 @@ export default class Collection extends Component {
             headerModal: '',
             typeModal: '',
 
-            checkboxFields: []
+            filters: [],
         }
         //console.log("Store redux home:  ", store.getState());
     }
@@ -40,7 +39,7 @@ export default class Collection extends Component {
     clearItemModel() {
         item = {
             title: '',
-            img: 'https://res.cloudinary.com/dvfmqld3v/image/upload/w_300,h_200/fotoDedault_h4wsk8',
+            img: '',
             fields: this.state.fields,
             tags: [],
             author: this.state.author,
@@ -119,11 +118,11 @@ export default class Collection extends Component {
                     author: res.data.author,
                     authorId: res.data.authorId,
                     items: res.data.items || [],
+                    initialItems: res.data.items || [],
 
-                    checkboxFields : res.data.fields.filter(field => field.type === 'Checkbox')
                 });
-                //console.log("collection ", res.data)
-                
+                this.refresh();
+
             })
             .catch(err => {
                 console.log(err);
@@ -156,9 +155,9 @@ export default class Collection extends Component {
 
     handleChange(event) {
         if (event.target.value === 'Title') {
-            let sortItems = this.state.items;
-            this.sortByTitle(sortItems);
-            this.setState({ items: sortItems })
+            // let sortItems = this.state.filteredItems;
+            // this.sortByTitle(sortItems);
+            // this.setState({ filteredItems: filteredItems })
         }
         if (event.target.value === 'Date') {
             this.changeStateUpdate();
@@ -166,45 +165,43 @@ export default class Collection extends Component {
 
     }
 
-    filterByFoto(event) {
-        console.log('checked ', event.target.checked)
+    filterByPhoto(event) {
+        let filters = this.state.filters;
         if (event.target.checked) {
-            let filterItems = this.state.items;
-            filterItems = filterItems.filter(item => item.img != 'https://res.cloudinary.com/dvfmqld3v/image/upload/w_300,h_200/fotoDedault_h4wsk8');
-            this.setState({ items: filterItems })
+            filters.push({ id: 'fieldPhoto', func: (item) => { return !!item.img } });
         } else {
-            this.changeStateUpdate();
+            const index = filters.findIndex(f => f.id === 'fieldPhoto');
+            filters.splice(index, 1);
         }
+        this.setState(state => ({ filters: filters }));
+        this.refresh();
+
     }
 
-    filterByFieldColection(event) {
-        //console.log('checked ', event.target.checked);
-        //console.log('checked name ', event.target.name);
-        if (event.target.checked){
-            let filterItems = this.state.items;
-            filterItems = filterItems.filter(item => item.fields.filter(f => f.value === true && f.name === event.target.name).length !== 0)
-            //console.log("filterItems ", filterItems)
-            this.setState({items : filterItems})
+    filterByCheckbox(event, field) {
+        var filters = this.state.filters;
+        if (event.target.checked) {
+            filters.push({ id: field.id, func: (item) => { return item.fields.some(f => f.value === true && f.name === field.name); } });
         } else {
-            this.changeStateUpdate();
+            const index = filters.findIndex(f => f.id === field.id);
+            filters.splice(index, 1);
         }
-      
+        this.setState(state => ({ filters: filters }));
+        this.refresh();
     }
 
-    /*
-    addCheckboxCollection() {
-        let fields = this.state.fields.filter(field => field.type === 'Checkbox');
-        console.log('check fields ', fields);
-        this.setState({checkboxFields : fields})
-       /* let result = fields.map(f => {
-            return <div className="checkboxCollection" >
-                <Form.Check type="checkbox" key={f.id + new Date().getMilliseconds()} label={f.name} id={f.id} name={f.name} onChange={e => this.filterByFieldColection(e)}
-                    />
-            </div>
-        })
+    refresh() {
+        let items = this.state.initialItems;
 
-        return result;*/
-//}
+        this.state.filters.forEach(filter => {
+            items = items.filter(filter.func);
+        });
+        // let filterItems = this.state.items;
+        // let filters = this.state.eventsCheckbox.map(event => {
+        //     return filterItems.filter(item => item.fields.filter(f => f.value === true && f.name === event).length !== 0)
+        // });
+        this.setState({ items: items })
+    }
 
     render() {
         const linkAuthor = `/user/${this.state.authorId}`;
@@ -214,7 +211,7 @@ export default class Collection extends Component {
                     <Container>
                         <div className="d-flex flex-column align-items-center justify-content-center">
                             <h1>{this.state.title}</h1>
-                            <p className="text-muted">{this.state.items.length} photos collected by
+                            <p className="text-muted">{this.state.initialItems.length} photos collected by
                                 <LinkContainer to={linkAuthor}>
                                     <a> {this.state.author}</a>
                                 </LinkContainer>
@@ -238,13 +235,18 @@ export default class Collection extends Component {
                             </div>
 
                             <div className="d-flex flex-row justify-content-around">
-                                <Form.Check className="checkboxCollection" type="checkbox" label='With foto' onChange={e => this.filterByFoto(e)}
-                                    defaultChecked={false}  id='checkFoto'/>
-                                {this.state.checkboxFields.map(field => {
-                                    return <div key={field.id + '11'}>
-                                    <Form.Check className="checkboxCollection"  type="checkbox" label={field.name} name={field.name} onChange={e => this.filterByFieldColection(e)}
-                                    defaultChecked={false} />
-                                    </div>
+                                <Form.Check className="checkboxCollection" type="checkbox" label='With foto' onChange={e => this.filterByPhoto(e)}
+                                    defaultChecked={false} id='checkPhoto' />
+                                {this.state.fields.map(field => {
+                                    if (field.type === 'Checkbox') {
+                                        return (
+                                            <div key={field.id}>
+                                                <Form.Check className="checkboxCollection" type="checkbox" label={field.name} name={field.name} onChange={e => this.filterByCheckbox(e, field)}
+                                                    defaultChecked={false} />
+                                            </div>)
+                                    } else {
+                                        return;
+                                    }
                                 })}
                             </div>
 
@@ -264,7 +266,7 @@ export default class Collection extends Component {
                         <div className="row ">
                             {
                                 this.state.items.map(item => {
-                                    return <div className=" card-deck col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-4" style={{ marginTop: 3 + '%' }} key={item._id}>
+                                    return <div className=" card-deck col-xs-12 col-lg-6 col-xl-4" style={{ marginTop: 3 + '%' }} key={item._id}>
                                         <CardItem
                                             deleteItem={this.deleteItem.bind(this)}
                                             editItem={this.editItem.bind(this)}

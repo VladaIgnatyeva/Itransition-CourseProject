@@ -11,12 +11,18 @@ router.get('/', function (req, res) {
         title: 1,
         description: 1,
         topic: 1,
-        author :''
+        cover: '',
+        fields: 1,
+        author: 1,
+        authorId: 1,
+        items: [],
     });
 
     result.then(data => res.json(data))
         .catch(err => res.status(400).send(err));
 });
+
+
 
 router.get('/:id', function (req, res) {
     //console.log("id ", req.params)
@@ -35,13 +41,17 @@ router.get('/:id', function (req, res) {
         .catch(err => res.status(400).send(err));
 });
 
+
+
 router.get('/author/:authorId', function (req, res) {
     Collection.find({ authorId: req.params.authorId }, {
         title: 1,
         description: 1,
         topic: 1,
         cover: '',
-        id: 1
+        id: 1,
+        author: '',
+        authorId: ''
     })
         .then(data => res.json(data))
         .catch(err => res.status(400).send(err));

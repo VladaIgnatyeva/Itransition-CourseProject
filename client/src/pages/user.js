@@ -30,7 +30,6 @@ export default class User extends Component {
         }
 
         this.state = {
-            // username: localStorage.getItem("username"),
             username: '',
             collections: [],
             update: false,
@@ -229,7 +228,7 @@ export default class User extends Component {
                             />
                             {
                                 this.state.collections.map(item => {
-                                    return <div className=" card-deck col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-4" style={{ marginTop: 3 + '%' }} key={item._id}>
+                                    return <div className=" card-deck col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-4" style={{ marginTop: 3 + '%' }} key={item._id + new Date().getMilliseconds()}>
                                         <CardCollection
                                             nameAuthor={this.state.username}
                                             item={item}

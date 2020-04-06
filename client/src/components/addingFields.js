@@ -69,7 +69,7 @@ class AddingFields extends React.Component {
                 </div>
                 {
                     this.state.fields.map(item => {
-                        return <div key={item.id} className="fieldsList">
+                        return <div key={item.id + new Date().getMilliseconds() - 23} className="fieldsList">
                             <h4><span className="badge ">{item.type}  :  {item.name}</span></h4>
                             <button type="button" className="btn buttonX" id="btnEdit" onClick={() => this.deleteField(item.id)}>
                                 <span className="oi oi-x " title="icon x" aria-hidden="true"></span>

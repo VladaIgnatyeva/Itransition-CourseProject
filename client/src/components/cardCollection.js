@@ -32,9 +32,8 @@ class CardCollection extends Component {
                     <ReactMarkdown source={this.state.item.description} escapeHtml={false} />{' '}
                 </div>
                 <LinkContainer to={linkCollection}>
-                    <a className="btn btn-secondary stretched-link">Go </a>
+                    <a className="btn btn-secondary">Go </a>
                 </LinkContainer>
-
             </Card.Body>
         </div>
     }
@@ -67,7 +66,6 @@ class CardCollection extends Component {
 
         return (
             <Card >
-
                 <div className="cardImg ">
                     <div className="cardTool">
                         <button type="button" className="btn btn-outline-light " id="btnEdit" onClick={this.editCollection.bind(this)}>
@@ -81,6 +79,20 @@ class CardCollection extends Component {
                 </div>
 
                 {this.showCardTool()}
+
+                <Card.Footer>
+                    <div>
+                        <div className="row">
+                            <div className="col col-lg-4 col-sm-4 col-md-4 col-xl-6">
+                                <div className="">
+                                    by  <LinkContainer to={`/user/${this.state.item.authorId}`} >
+                                        <a> {this.state.item.author}</a>
+                                    </LinkContainer>
+                                </div>
+                            </div>
+                        </div>  
+                    </div>                 
+                </Card.Footer>
             </Card >
         )
     }

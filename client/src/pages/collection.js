@@ -196,10 +196,7 @@ export default class Collection extends Component {
         this.state.filters.forEach(filter => {
             items = items.filter(filter.func);
         });
-        // let filterItems = this.state.items;
-        // let filters = this.state.eventsCheckbox.map(event => {
-        //     return filterItems.filter(item => item.fields.filter(f => f.value === true && f.name === event).length !== 0)
-        // });
+
         this.setState({ items: items })
     }
 
@@ -240,7 +237,7 @@ export default class Collection extends Component {
                                 {this.state.fields.map(field => {
                                     if (field.type === 'Checkbox') {
                                         return (
-                                            <div key={field.id}>
+                                            <div key={field.id + new Date().getMilliseconds() -67}>
                                                 <Form.Check className="checkboxCollection" type="checkbox" label={field.name} name={field.name} onChange={e => this.filterByCheckbox(e, field)}
                                                     defaultChecked={false} />
                                             </div>)
@@ -266,7 +263,7 @@ export default class Collection extends Component {
                         <div className="row ">
                             {
                                 this.state.items.map(item => {
-                                    return <div className=" card-deck col-xs-12 col-lg-6 col-xl-4" style={{ marginTop: 3 + '%' }} key={item._id}>
+                                    return <div className=" card-deck col-xs-12 col-lg-6 col-xl-4" style={{ marginTop: 3 + '%' }} key={item._id + new Date().getMilliseconds() }>
                                         <CardItem
                                             deleteItem={this.deleteItem.bind(this)}
                                             editItem={this.editItem.bind(this)}

@@ -64,10 +64,10 @@ const ModalItem = (props) => {
 
     function handleChange2(event, id) {
         parametrs.fields.map(f => {
-            if(f.id === id){
+            if (f.id === id) {
                 f.value = event.target.value;
             }
-        }); 
+        });
     }
 
     function setImg(url) {
@@ -80,15 +80,15 @@ const ModalItem = (props) => {
 
     function onChangeFavorite(event, id) {
         parametrs.fields.map(f => {
-            if(f.id === id){
+            if (f.id === id) {
                 f.value = event.target.checked;
             }
-        }); 
+        });
     };
 
 
     function fieldsItem(field) {
-       //console.log('field.value', field.value)
+        //console.log('field.value', field.value)
         switch (field.type) {
             case 'Number':
                 return <Form.Group as={Row} key={field.id}>
@@ -117,7 +117,7 @@ const ModalItem = (props) => {
                 </Form.Group>
                 break;
             case 'Text':
-                return <Form.Group as={Row} key={field.id }>
+                return <Form.Group as={Row} key={field.id}>
                     <Form.Label column sm="2">{field.name}</Form.Label>
                     <Col sm="8">
                         <Form.Control
@@ -179,7 +179,7 @@ const ModalItem = (props) => {
                         </Form.Group>
                         <Form.Group controlId="exampleForm.ControlTextarea1">
                             <Form.Label>Tags:*</Form.Label>
-                            <Tags getTags={getTags} defaultTags={parametrs.tags}/>
+                            <Tags getTags={getTags} defaultTags={parametrs.tags} />
                         </Form.Group>
 
                         <Form.Group >

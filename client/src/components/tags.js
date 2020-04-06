@@ -42,7 +42,7 @@ export default class Tags extends React.Component {
 
 
     componentDidMount() {
-        console.log("tags props", this.props.defaultTags)
+        //console.log("tags props", this.props.defaultTags)
         const wrapp = new Wrapper();
         wrapp.get(`api/tags`)
             .then(res => {

@@ -18,7 +18,7 @@ router.get('/login/facebook/callback', (req, res, next) =>
         if (user) {
             const params = user.toAuthJSON();
 
-            return res.redirect(`${config.get("hostClient")}/user?id=${params.id}&username=${params.username}&token=${params.token}`);
+            return res.redirect(`${config.get("hostClient")}/user/${params.id}?username=${params.username}&token=${params.token}`);
         }
 
         return res.status(400);

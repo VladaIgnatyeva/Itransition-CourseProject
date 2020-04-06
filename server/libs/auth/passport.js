@@ -29,12 +29,13 @@ passport.use(new LocalStrategy({
 }, (email, password, done) => {
   User.findOne({ email })
     .then((user) => {
-      if (!user || !user.checkPassword(password)) {
+      if (!user || !user.checkPassword(password) || user.role == 'user_block') {
         return done(null, false, { errors: { 'email or password': 'is invalid' } });
       }
 
       return done(null, user);
-    }).catch(done);
+    })
+    .catch(done);
 }));
 
 passport.use('facebook', new FacebookStrategy({

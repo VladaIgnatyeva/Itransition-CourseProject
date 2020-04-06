@@ -43,7 +43,7 @@ export default class SignIn extends Component {
             const wrapp = new Wrapper();
             wrapp.post('api/users/login', user)
                 .then(res => {
-                    console.log("res data: ", res.data);
+                    //console.log("res data: ", res.data);
                     localStorage.setItem('token', res.data.token);
                     localStorage.setItem("username", res.data.username);
                     localStorage.setItem("id", res.data.id);
@@ -54,7 +54,7 @@ export default class SignIn extends Component {
                     
                     const store = getStore();
                     store.dispatch(loggedIn({username: res.data.username, role: res.data.role, id:res.data.id, isLoggedInStatus: true, avatar:res.data.avatar}));
-                    console.log("Store redux login:  ", store.getState());
+                    //console.log("Store redux login:  ", store.getState());
 
                     this.props.history.push(`/user/${res.data.id}`);
                 })
@@ -67,8 +67,7 @@ export default class SignIn extends Component {
     }
 
     render() {
-        const href = `${api}/api/signup/facebook`
-        console.log('href face', href)
+        const href = `${api}/api/signup/facebook` 
         return (
             <>
                 <div className="bgSign">
